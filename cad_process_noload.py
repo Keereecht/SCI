@@ -28,6 +28,7 @@ def Filter_values(text_info):
     samevalue = set(alldf) & set(component_values)
     # noload_cad = set(alldf) - set(component_values)
     noload_cad = set(component_values) - set(alldf)
+    notfount =  set(alldf) - set(component_values)
     data_storage.noload_cad_len = len(noload_cad)
     total_count = 0
     text_info.configure(state="normal")
@@ -36,8 +37,15 @@ def Filter_values(text_info):
         total_count += count  # บวกจำนวนสะสม
         text_info.insert(tk.END, f"{value} Actual_fond {total_count} (EA)\n")
         print(f"{value}: Total count so far: {total_count}")
+    # text_info.configure(state="disabled")
+    for notf in notfount:
+        print("============เข้ามาแล้ว")
+        count = alldf.count(notf)
+        print(notf)
+        total_count += count
+        text_info.insert(tk.END, f"{notf} Not_fond {total_count}(EA)\n")
+        print(f"{notfount}: Total count so far: ")
     text_info.configure(state="disabled")
-
     # Prepare data for CSV
     noload_cad_list = list(noload_cad)
     noload_cad_counts = [alldf.count(value) for value in noload_cad_list]

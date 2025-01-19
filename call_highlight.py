@@ -85,8 +85,8 @@ def runfile(text_info, Textboxfind):
         data_bot_no_ic = data_storage.data_buttom[~data_storage.data_buttom['Item_Description'].str.startswith('IC')]
         data_top_ic = data_storage.data_top[data_storage.data_top['Item_Description'].str.startswith('IC')]
         data_bot_ic = data_storage.data_buttom[data_storage.data_buttom['Item_Description'].str.startswith('IC')]
-        data_storage.sum_qty_hltop = data_storage.data_hl_top['BOM_Target(EA)'].sum()
-        data_storage.sum_qty_hlbot = data_storage.data_hl_bot['BOM_Target(EA)'].sum()
+        # data_storage.sum_qty_hltop = data_storage.data_hl_top['BOM_Target(EA)'].sum()
+        # data_storage.sum_qty_hlbot = data_storage.data_hl_bot['BOM_Target(EA)'].sum()
 
         data_storage.sum_qty_top = data_top_no_ic['BOM_Target(EA)'].sum()
         data_storage.sum_qty_top_ic = data_top_ic['BOM_Target(EA)'].sum()
@@ -97,6 +97,12 @@ def runfile(text_info, Textboxfind):
         data_storage.sum_find_top_ic = data_top_ic['PDF_Actual(EA)'].sum()
         data_storage.sum_find_bot = data_bot_no_ic['PDF_Actual(EA)'].sum()
         data_storage.sum_find_bot_ic = data_bot_ic['PDF_Actual(EA)'].sum()
+
+        data_storage.sum_qty_hltop = data_storage.data_hl_top['BOM_Target(EA)'].sum()
+        data_storage.sum_qty_hlbot = data_storage.data_hl_bot['BOM_Target(EA)'].sum()
+        
+        data_storage.sum_find_hltop = data_storage.data_hl_top['PDF_Actual(EA)'].sum() #ดูก่อนค่อยว่ากัน
+        data_storage.sum_find_hlbot = data_storage.data_hl_bot['PDF_Actual(EA)'].sum()
 
         data_storage.Not_found_top = max(int(data_storage.sum_qty_top) - int(data_storage.sum_find_top), 0)
         data_storage.Not_found_top_ic = max(int(data_storage.sum_qty_top_ic) - int(data_storage.sum_find_top_ic), 0)
@@ -156,7 +162,7 @@ def runfile(text_info, Textboxfind):
         data_storage.sum_qty_hlbot = data_storage.data_hl_bot['BOM_Target(EA)'].sum()
         
         data_storage.sum_find_top = data_storage.data_top['PDF_Actual(EA)'].sum()
-        data_storage.sum_find_hltop = data_storage.data_hl_top['PDF_Actual(EA)'].sum()
+        data_storage.sum_find_hltop = data_storage.data_hl_top['PDF_Actual(EA)'].sum() #ดูก่อนค่อยว่ากัน
         data_storage.sum_find_bot = data_storage.data_buttom['PDF_Actual(EA)'].sum()
         data_storage.sum_find_hlbot = data_storage.data_hl_bot['PDF_Actual(EA)'].sum()
 
@@ -179,120 +185,7 @@ def runfile(text_info, Textboxfind):
         time.sleep(1)
         messagebox.showinfo("สถานะ", "เสร็จสิ้น")
 
-# def call_runcad(Textboxfind,text_info):
-#     current_datetime = datetime.now()
-#     date_time = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-#     data_storage.date_time = date_time
 
-#     Textboxfind.configure(state="normal")
-#     Textboxfind.delete("1.0", "end")
-#     Textboxfind.configure(state="disabled")
-#     text_info.configure(state="normal")
-#     text_info.insert(tk.END, "Processing...\n")
-#     text_info.configure(state="disabled")
-#     input_file_path = "parts_cadprocess/com.cad"
-
-#     cad_process_noload.extract_component_values()
-#     cad_process_noload.Filter_values(text_info)
-    
-#     # สร้างหน้าต่าง loading screen
-#     load_win, progress_bar = loading_window()
-#     total_steps = 10
-
-#     try:
-#         for step in range(total_steps):
-#             start_time_cadtop = time.time()
-#             if step == 0:
-#                 output_file_path = "cadprocess/top_capa.cad"
-#                 components_to_keep = data_storage.capa_top
-#                 cad_process_top.components_capatop(input_file_path, output_file_path, components_to_keep)
-#             elif step == 1:
-#                 output_file_path = "cadprocess/top_res.cad"
-#                 components_to_keep = data_storage.res_top
-#                 cad_process_top.components_restop(input_file_path, output_file_path, components_to_keep)
-#             elif step == 2:
-#                 output_file_path = "cadprocess/top_ic.cad"
-#                 components_to_keep = data_storage.ic_top
-#                 cad_process_top.components_ictop(input_file_path, output_file_path, components_to_keep)
-#             elif step == 3:
-#                 output_file_path = "cadprocess/top_other.cad"
-#                 components_to_keep = data_storage.other_top
-#                 cad_process_top.components_othertop(input_file_path, output_file_path, components_to_keep)
-#             elif step == 4:
-#                 output_file_path = "cadprocess/top_hl.cad"
-#                 components_to_keep = data_storage.hl_top
-#                 cad_process_top.components_hltop(input_file_path, output_file_path, components_to_keep)
-
-#             elif step == 5:
-#                 output_file_path = "cadprocess/bot_capa.cad"
-#                 components_to_keep = data_storage.capa_bot
-#                 cad_process_bot.components_capabot(input_file_path, output_file_path, components_to_keep)
-#             elif step == 6:
-#                 output_file_path = "cadprocess/bot_res.cad"
-#                 components_to_keep = data_storage.res_bot
-#                 cad_process_bot.components_resbot(input_file_path, output_file_path, components_to_keep)
-#             elif step == 7:
-#                 output_file_path = "cadprocess/bot_ic.cad"
-#                 components_to_keep = data_storage.ic_bot
-#                 cad_process_bot.components_icbot(input_file_path, output_file_path, components_to_keep)
-#             elif step == 8:
-#                 output_file_path = "cadprocess/bot_other.cad"
-#                 components_to_keep = data_storage.other_bot
-#                 cad_process_bot.components_otherbot(input_file_path, output_file_path, components_to_keep)
-#             elif step == 9:
-#                 output_file_path = "cadprocess/bot_hl.cad"
-#                 components_to_keep = data_storage.hl_bot
-#                 cad_process_bot.components_hlbot(input_file_path, output_file_path, components_to_keep) 
-#             # อัปเดต progress bar
-#             progress_value = (step + 1) * (100 / total_steps)
-#             update_progress(progress_bar, progress_value)
-#             load_win.update()  # อัปเดตหน้าต่าง GUI
-#             time.sleep(0.1)   # จำลองเวลาการประมวลผล
-
-#         # การดำเนินการเพิ่มเติมนอกลูป
-#         cad_process_top.compoundcad()
-#         cad_process_top.saveoutput_capatop()
-#         cad_process_top.saveoutput_hltop()
-
-#         cad_process_bot.compoundcad()
-#         cad_process_bot.saveoutput_capabot()
-#         cad_process_bot.saveoutput_hlbot()
-  
-
-#         compound_countcad.use_component_count_top(Textboxfind)
-#         output_file_path = "cadprocess/top_hl.cad"
-#         cad_process_top.components_hltop_use(input_file_path, output_file_path)
-#         output_file_path = "cadprocess/bot_hl.cad"
-#         cad_process_bot.components_hlbot_use(input_file_path, output_file_path)
-#         combinefile.process_and_combine_files_for_project()
-#         pluscadname.rename_project_folder()
-
-#         # การคำนวณสถิติ
-#         data_storage.sum_qty_top = data_storage.data_top['BOM_Target(EA)'].sum()
-#         data_storage.sum_qty_hltop = data_storage.data_hl_top['BOM_Target(EA)'].sum()
-#         data_storage.sum_qty_bot = data_storage.data_buttom['BOM_Target(EA)'].sum()
-#         data_storage.sum_qty_hlbot = data_storage.data_hl_bot['BOM_Target(EA)'].sum()
-#         data_storage.sum_find_top = data_storage.data_top['PDF_Actual(EA)'].sum()
-#         data_storage.sum_find_hltop = data_storage.data_hl_top['PDF_Actual(EA)'].sum()
-#         data_storage.sum_find_bot = data_storage.data_buttom['PDF_Actual(EA)'].sum()
-#         data_storage.sum_find_hlbot = data_storage.data_hl_bot['PDF_Actual(EA)'].sum()
-
-#         data_storage.Not_found_top = max(int(data_storage.sum_qty_top) - int(data_storage.sum_find_top), 0)
-#         data_storage.Not_found_hltop = max(int(data_storage.sum_qty_hltop) - int(data_storage.sum_find_hltop), 0)
-#         data_storage.Not_found_bot = max(int(data_storage.sum_qty_bot) - int(data_storage.sum_find_bot), 0)
-#         data_storage.Not_found_hlbot = max(int(data_storage.sum_qty_hlbot) - int(data_storage.sum_find_hlbot), 0)
-
-#         data_storage.percent_top_smt = round(data_storage.sum_find_top / data_storage.sum_qty_top * 100) if data_storage.sum_qty_top != 0 else 0
-#         data_storage.percent_top_hltop = round(data_storage.sum_find_hltop / data_storage.sum_qty_hltop * 100) if data_storage.sum_qty_hltop != 0 else 0
-#         data_storage.percent_bot_smt = round(data_storage.sum_find_bot / data_storage.sum_qty_bot * 100) if data_storage.sum_qty_bot != 0 else 0
-#         data_storage.percent_bot_hlbot = round(data_storage.sum_find_hlbot / data_storage.sum_qty_hlbot * 100) if data_storage.sum_qty_hlbot != 0 else 0
-
-#         if not data_storage.selected_customer == "Test_product":
-#             call_data_base_cad.data_base_sheet()
-
-#     finally:
-#         close_loading_window(load_win)
-#         print('--------save----------')
 def call_runcad(Textboxfind,text_info):
     current_datetime = datetime.now()
     date_time = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
