@@ -1,0 +1,19 @@
+Outpath,C:\data_custumer_save
+
+Outcad,C:\data_custumer_save
+--------------------------
+Version,  Version:2.0
+Version,Update:8/22/2024
+-------------------------
+Csvdatabase,outputdatabast
+-----------user---------------
+user,a
+pass,1
+
+user,Tongtung
+pass,1
+
+------------------------------
+database,"Config/keereeAPI.json"
+filesheetname,"python_database"
+worksheet,data
