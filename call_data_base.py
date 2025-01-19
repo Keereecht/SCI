@@ -22,7 +22,6 @@ def readapikey():
             key, value = line.split(',')
             # เก็บค่าในตัวแปร database_value
             database_value = value.strip('"')  # ลบเครื่องหมายคำพูดหากมี
-            #ADD NEW USELESS LINES ----------------------------------------------------------------------------------------------------------------------------
         if line.startswith('filesheetname'):
             # แยกค่าด้วยเครื่องหมายจุลภาค
             key, value = line.split(',')
