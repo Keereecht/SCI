@@ -31,21 +31,43 @@ def Filter_values(text_info):
     notfount =  set(alldf) - set(component_values)
     data_storage.noload_cad_len = len(noload_cad)
     total_count = 0
+    total_count_not = 0
     text_info.configure(state="normal")
+    # กำหนดความกว้างของแต่ละคอลัมน์
+    count_width = 10
+    value_width = 15
+    result_width = 15
+    # เพิ่มหัวข้อ
+    header = f"{'Item'.ljust(count_width)}{'Device'.ljust(value_width)}{'Result'.ljust(result_width)}\n"
+    text_info.insert(tk.END, "-" * len(header) + "\n")
+    text_info.insert(tk.END, header)
+    text_info.insert(tk.END, "-" * len(header) + "\n")
     for value in samevalue:
         count = alldf.count(value)
         total_count += count  # บวกจำนวนสะสม
-        text_info.insert(tk.END, f"{value} Actual_fond {total_count} (EA)\n")
+        formatted_text = (
+            f"{str(total_count).ljust(count_width)}"
+            f"{value.ljust(value_width)}"
+            f"{'Found'.ljust(result_width)}\n"
+        )
+        text_info.insert(tk.END,formatted_text)
         print(f"{value}: Total count so far: {total_count}")
     # text_info.configure(state="disabled")
+    header = f"{'Item'.ljust(count_width)}{'Device'.ljust(value_width)}{'Result'.ljust(result_width)}\n"
+    text_info.insert(tk.END, "-" * len(header) + "\n")
+    text_info.insert(tk.END, header)
+    text_info.insert(tk.END, "-" * len(header) + "\n")
     for notf in notfount:
-        print("============เข้ามาแล้ว")
         count = alldf.count(notf)
-        print(notf)
-        total_count += count
-        text_info.insert(tk.END, f"{notf} Not_fond {total_count}(EA)\n")
-        print(f"{notfount}: Total count so far: ")
+        total_count_not += count  # บวกจำนวนสะสม
+        formatted_text = (
+            f"{str(total_count_not).ljust(count_width)}"
+            f"{notf.ljust(value_width)}"
+            f"{'Not found'.ljust(result_width)}\n"
+        )
+        text_info.insert(tk.END,formatted_text)
     text_info.configure(state="disabled")
+    data_storage.notfountlist = len(notfount)
     # Prepare data for CSV
     noload_cad_list = list(noload_cad)
     noload_cad_counts = [alldf.count(value) for value in noload_cad_list]

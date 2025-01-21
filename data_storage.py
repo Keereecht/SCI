@@ -87,3 +87,5 @@ cadfilename = ""
 
 noload_cad_len = 0
 noloadtime = 0
+
+notfountlist = 0

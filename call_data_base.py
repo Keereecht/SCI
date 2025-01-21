@@ -71,6 +71,10 @@ def data_base_sheet():
     pdf_top_filename = data_storage.pdf_top_filename if data_storage.pdf_top_filename else ""
     pdf_bot_filename = data_storage.pdf_bot_filename if data_storage.pdf_bot_filename else ""
     outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
+    percent_handload = (
+        int((int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot) / int(data_storage.sum_qty_hltop)) * 100)
+        if data_storage.sum_qty_hltop != 0 else 0
+    )
 
     # เพิ่ม project_id และ customer ในแถวถัดไป
     if not data_storage.iccall_value:
@@ -80,7 +84,7 @@ def data_base_sheet():
             [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_bot_filename, data_storage.page_bot +1, data_storage.projectname + "_BOT_SMT",int(data_storage.sum_qty_bot), int(data_storage.sum_find_bot), data_storage.Not_found_bot, int(data_storage.percent_bot_smt), data_storage.time_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],  
             [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_bot_filename, data_storage.page_bot +1, data_storage.projectname + "_BOT_IC", int(data_storage.sum_qty_bot_ic), int(data_storage.sum_find_bot_ic), data_storage.Not_found_bot_ic, int(data_storage.percent_bot_ic), data_storage.time_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],
 
-            [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_top_filename,"-", data_storage.projectname + "_Handload",int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot),int(data_storage.sum_qty_hltop) - int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot), int((int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot)/int(data_storage.sum_qty_hltop))*100), data_storage.time_hl_top + data_storage.time_hl_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],
+            [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_top_filename,"-", data_storage.projectname + "_Handload",int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot),int(data_storage.sum_qty_hltop) - int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot), percent_handload, data_storage.time_hl_top + data_storage.time_hl_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],
 
             [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_top_filename, data_storage.page_top +1, data_storage.projectname + "_TOP_Handload",int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop), data_storage.Not_found_hltop, int(data_storage.percent_top_hltop), data_storage.time_hl_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
             [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_bot_filename, data_storage.page_bot +1, data_storage.projectname + "_BOT_Handload",int(data_storage.sum_qty_hlbot), int(data_storage.sum_find_hlbot), data_storage.Not_found_hlbot, int(data_storage.percent_bot_hlbot), data_storage.time_hl_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],

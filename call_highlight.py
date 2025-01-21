@@ -186,7 +186,7 @@ def runfile(text_info, Textboxfind):
         messagebox.showinfo("สถานะ", "เสร็จสิ้น")
 
 
-def call_runcad(Textboxfind,text_info):
+def call_runcad(Textboxfind,text_info,Textboxnotfound):
     current_datetime = datetime.now()
     date_time = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
     data_storage.date_time = date_time
@@ -201,6 +201,10 @@ def call_runcad(Textboxfind,text_info):
 
     cad_process_noload.extract_component_values()
     cad_process_noload.Filter_values(text_info)
+
+    # Textboxnotfound.configure(state="normal")
+    # Textboxnotfound.insert(tk.END,data_storage.notfountlist)
+    # Textboxnotfound.configure(state="disabled")
     
     # สร้างหน้าต่าง loading screen
     load_win, progress_bar = loading_window()
@@ -306,7 +310,9 @@ def call_runcad(Textboxfind,text_info):
         cad_process_bot.components_hlbot_use(input_file_path, output_file_path)
         combinefile.process_and_combine_files_for_project()
         pluscadname.rename_project_folder()
-
+        Textboxnotfound.configure(state="normal")
+        Textboxnotfound.insert(tk.END,data_storage.notfountlist)
+        Textboxnotfound.configure(state="disabled")
         # การคำนวณสถิติ
         data_storage.sum_qty_top = data_storage.data_top['BOM_Target(EA)'].sum()
         data_storage.sum_qty_hltop = data_storage.data_hl_top['BOM_Target(EA)'].sum()

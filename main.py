@@ -311,7 +311,7 @@ def Run_highlight():
         if not data_storage.cadfile:
             messagebox.showerror("ERROR","Please import a CAD file before proceeding.")
         if data_storage.cadfile:
-            call_highlight.call_runcad(Textboxfind,text_info)
+            call_highlight.call_runcad(Textboxfind,text_info,Textboxnotfound)
             red_frame_run.config(highlightthickness=0) 
             red_frame_button_createprojectname.config(highlightthickness=2)
             resetfile.reset_files()
