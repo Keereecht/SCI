@@ -24,19 +24,19 @@ import call_Merge_images
 
 display = tk.Tk()
 display.title("Program highlights")
-# display.state('zoomed')
+display.state('zoomed')
 display.configure(bg="#DCDCDC")
 display.geometry("1200x660")
 # ---------------------
 display.update_idletasks()
-screen_width = display.winfo_screenwidth()
-screen_height = display.winfo_screenheight()
-size = tuple(int(_) for _ in display.geometry().split('+')[0].split('x'))
-x = (screen_width - size[0]) // 2
-y = (screen_height - size[1]) // 2
-display.geometry(f"{size[0]}x{size[1]}+{x}+{y}")
+# screen_width = display.winfo_screenwidth()
+# screen_height = display.winfo_screenheight()
+# size = tuple(int(_) for _ in display.geometry().split('+')[0].split('x'))
+# x = (screen_width - size[0]) // 2
+# y = (screen_height - size[1]) // 2
+# display.geometry(f"{size[0]}x{size[1]}+{x}+{y}")
 # ---------------------
-display.resizable(False, False)
+# display.resizable(False, False)
 load_csv_data()
 # ฟังก์ชันโหลดโลโก้ในพื้นหลัง
 def load_logo_image():
@@ -140,6 +140,7 @@ def create_pn():
         if data_storage.projectname:
             red_frame_button_createprojectname.config(highlightthickness=0)
             red_frame_importcsv.config(highlightthickness=2)
+            red_frame_importpdf.config(highlightthickness=0)
 
 def import_csv_data():
 
@@ -150,6 +151,7 @@ def import_csv_data():
         if data_storage.filenamecsv:
             red_frame_importcsv.config(highlightthickness=0)
             red_frame_importpdf.config(highlightthickness=2)
+            red_frame_run.config(highlightthickness=0)
             
 def open_pdf_window():
     

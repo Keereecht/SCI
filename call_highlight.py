@@ -190,7 +190,8 @@ def call_runcad(Textboxfind,text_info,Textboxnotfound):
     current_datetime = datetime.now()
     date_time = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
     data_storage.date_time = date_time
-
+    Textboxnotfound.configure(state="normal")
+    Textboxnotfound.delete("1.0","end")
     Textboxfind.configure(state="normal")
     Textboxfind.delete("1.0", "end")
     Textboxfind.configure(state="disabled")
