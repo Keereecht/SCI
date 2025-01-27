@@ -1,6 +1,4 @@
 import data_storage
-# def savefile():
-#     print(data_storage.pdf_path)
 def reset_files():
     data_storage.pdf_path = ""
     data_storage.pdf_top_filename = ""

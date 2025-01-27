@@ -272,19 +272,16 @@ def saveoutput_hlbot():
     # อัปเดตคอลัมน์ PDF_Actual(EA) และ Result
     total_actual_counts_bothl = sum(actual_counts)
     data_storage.total_actual_counts_bothl = sum(actual_counts)
+    data_storage.data_hl_bot['PDF_Actual(EA)'] = actual_counts
+    data_storage.data_hl_bot['Result'] = data_storage.data_hl_bot.apply(
+        lambda row: 'accepted' if row['PDF_Actual(EA)'] == row['BOM_Target(EA)'] else 'rejected', axis=1
+    )
     bothl = os.path.join(
     data_storage.Main_folder,
     data_storage.selected_customer,
     data_storage.projectname,
     data_storage.projectname +"_BOT_HANDLOAD.csv")
     data_storage.data_hl_bot.to_csv(bothl, index=False)
-
-    print(total_actual_counts_bothl,"======bothl")
-    data_storage.data_hl_bot['PDF_Actual(EA)'] = actual_counts
-    data_storage.data_hl_bot['Result'] = data_storage.data_hl_bot.apply(
-        lambda row: 'accepted' if row['PDF_Actual(EA)'] == row['BOM_Target(EA)'] else 'rejected', axis=1
-    )
-   
     print("Processing complete_bot.")
 
 def components_hlbot_use(input_file_path, output_file_path):
