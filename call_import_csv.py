@@ -3,6 +3,7 @@ from io import StringIO
 import os
 from tkinter import filedialog 
 import tkinter as tk
+from tkinter import messagebox
 # -----------------------------
 import data_storage
 
@@ -18,9 +19,9 @@ def open_file_csv(text_info,Textboxtotal):
     # Textboxreadfilecsv.insert(tk.END, filepathcsv)
     # Textboxreadfilecsv.configure(state="disabled")
 
-    text_info.configure(state="normal")
-    text_info.insert(tk.END, filenamecsv + " imported successfully\n")
-    text_info.configure(state="disabled")
+    # text_info.configure(state="normal")
+    # text_info.insert(tk.END, filenamecsv + " imported successfully\n")
+    # text_info.configure(state="disabled")
 
     with open(filepathcsv, "r", encoding='ISO-8859-1') as myfile:
         start_collecting = False
@@ -32,6 +33,19 @@ def open_file_csv(text_info,Textboxtotal):
             elif start_collecting:  # บันทึกเฉพาะหลังจากเจอบรรทัดที่ต้องการแล้ว
                 if "true" in line or "True" in line or "Active" in line or "active" in line:
                     text += line
+        if not text.strip():  # ตรวจสอบว่าไม่มีข้อมูลใน text
+            messagebox.showerror("Error", "ไฟล์ agile มีปัญหาโปรดตรวจสอบไฟล์ของคุณ")
+            text_info.configure(state="normal")
+            text_info.insert(tk.END, filenamecsv + " Imported ERROR\n")
+            text_info.configure(state="disabled")
+            filepathcsv =""
+            data_storage.filenamecsv = ""  # รีเซ็ตค่าใน data_storage ด้วย
+            return  # หยุดการทำงานของฟังก์ชันทันที
+
+    text_info.configure(state="normal")
+    text_info.insert(tk.END, filenamecsv + " Imported successfully\n")
+    text_info.configure(state="disabled")
+
     data_io = StringIO(text)
     df = pd.read_csv(data_io)
     columns_to_keep = ['Op Seq', 'Qty', 'Item Description', 'Ref Des']

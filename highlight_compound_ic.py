@@ -42,6 +42,16 @@ def run_top(text_info): # ใช้ text_widget จาก global
     collected_values_list = []
     count_list = []
     loop_counter = 0
+    global count_width,value_width,result_width,count_layer
+    count_width = 10
+    value_width = 15
+    result_width = 15
+    count_layer = 15
+    
+    header = f"{'Item'.ljust(count_width)}{'Layer'.ljust(count_layer)}{'Device'.ljust(value_width)}{'actual result'.ljust(result_width)}\n"
+    text_info.insert(tk.END, "-" * len(header) + "\n")
+    text_info.insert(tk.END, header)
+    text_info.insert(tk.END, "-" * len(header) + "\n")
     for x in range(top[0]):
         ref_des = data_storage.data_top.iat[x, 3]
         des = data_storage.data_top.iat[x, 2].strip().upper()
@@ -86,7 +96,15 @@ def run_top(text_info): # ใช้ text_widget จาก global
             collected_values.append(word[4])
             print(word[4], "Actual_fond(EA)", loop_counter)
             text_info.configure(state="normal")
-            text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
+            formatted_text = (
+                f"{str(loop_counter).ljust(count_width)}"
+                f"{"TOP".ljust(count_layer)}"
+                f"{word[4].ljust(value_width)}"
+                f"{'Found'.ljust(result_width)}\n"
+                )
+            text_info.insert(tk.END,formatted_text)
+            # text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
+
         collected_values_list.append(",".join(collected_values))
         count_list.append(count)
     doc.save(output_path_top)
@@ -126,6 +144,10 @@ def run_bot(text_info):
     words = page.get_text("words")
     collected_values_list = []
     count_list = []
+    header = f"{'Item'.ljust(count_width)}{'Layer'.ljust(count_layer)}{'Device'.ljust(value_width)}{'actual result'.ljust(result_width)}\n"
+    text_info.insert(tk.END, "-" * len(header) + "\n")
+    text_info.insert(tk.END, header)
+    text_info.insert(tk.END, "-" * len(header) + "\n")
     for x in range(bot[0]):
         ref_des = data_storage.data_buttom.iat[x, 3]
         des = data_storage.data_buttom.iat[x, 2].strip().upper()
@@ -174,7 +196,15 @@ def run_bot(text_info):
             collected_values.append(word[4])
             # print(word[4], "Actual_fond(EA)", loop_counter)
             text_info.configure(state="normal")
-            text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
+
+            # text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
+            formatted_text = (
+                f"{str(loop_counter).ljust(count_width)}"
+                f"{"BOTTOM".ljust(count_layer)}"
+                f"{word[4].ljust(value_width)}"
+                f"{'Found'.ljust(result_width)}\n"
+                )
+            text_info.insert(tk.END,formatted_text)
         collected_values_list.append(",".join(collected_values))
         count_list.append(count)
     doc.save(output_path_bot)
@@ -230,7 +260,14 @@ def run_top_hl(text_info):
             highlight.update()
             # print(word[4], "Actual_fond(EA)", loop_counter)
             text_info.configure(state="normal")
-            text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
+            # text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
+            formatted_text = (
+                f"{str(loop_counter).ljust(count_width)}"
+                f"{"TOP".ljust(count_layer)}"
+                f"{word[4].ljust(value_width)}"
+                f"{'Found'.ljust(result_width)}\n"
+                )
+            text_info.insert(tk.END,formatted_text)
             collected_values.append(word[4])
         collected_values_list.append(",".join(collected_values))
         count_list.append(count)
@@ -288,7 +325,14 @@ def run_bot_hl(text_info, Textboxfind):
             highlight.update()
             print(word[4], "Actual_fond(EA)", loop_counter)
             text_info.configure(state="normal")
-            text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
+            # text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
+            formatted_text = (
+                f"{str(loop_counter).ljust(count_width)}"
+                f"{"BOTTOM".ljust(count_layer)}"
+                f"{word[4].ljust(value_width)}"
+                f"{'Found'.ljust(result_width)}\n"
+                )
+            text_info.insert(tk.END,formatted_text)
             text_info.configure(state="disabled")
             collected_values.append(word[4])
         collected_values_list.append(",".join(collected_values))

@@ -132,9 +132,11 @@ def runfile(text_info, Textboxfind):
             if step == 0:
                 highlight_compound_ic.run_top(text_info) 
             elif step == 1:
-                highlight_compound_ic.run_bot(text_info)
-            elif step == 2:
                 highlight_compound_ic.run_top_hl(text_info)
+                # highlight_compound_ic.run_bot(text_info)
+            elif step == 2:
+                # highlight_compound_ic.run_top_hl(text_info)
+                highlight_compound_ic.run_bot(text_info)
             elif step == 3:
                 highlight_compound_ic.run_bot_hl(text_info, Textboxfind)
             elif step == 4:

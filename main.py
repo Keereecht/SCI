@@ -129,6 +129,9 @@ def on_select(event):
     if selection:
         red_frame_combobox_customer.config(highlightthickness=0)
         red_frame_button_createprojectname.config(highlightthickness=2)
+        red_frame_importcsv.config(highlightthickness=0)
+        red_frame_importpdf.config(highlightthickness=0)
+        red_frame_run.config(highlightthickness=0)
     print(f"Selected Customer is: {selection}")
 
 def create_pn():

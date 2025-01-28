@@ -80,8 +80,9 @@ def showfile_pdf(root, text_info,red_frame_run,red_frame_importpdf):
         else:
             pdfname = os.path.basename(pdf_path)
             data_storage.pdfname = pdfname
-            red_frame_importpdf.config(highlightthickness=0)
-            red_frame_run.config(highlightthickness=2)
+            if pdfname:
+                red_frame_importpdf.config(highlightthickness=0)
+                red_frame_run.config(highlightthickness=2)
             mywindow.destroy()
 
             # เก็บไฟล์หลัก
@@ -108,9 +109,10 @@ def showfile_pdf(root, text_info,red_frame_run,red_frame_importpdf):
         # shutil.copy(pdf_path_top, save_path)
 
         print(pdf_path_top)
-        text_info.configure(state="normal")
-        text_info.insert(tk.END,"TOP SIDE " + pdf_top_filename + " imported successfully\n")
-        text_info.configure(state="disabled")
+        if pdf_path_top:
+            text_info.configure(state="normal")
+            text_info.insert(tk.END,"TOP SIDE " + pdf_top_filename + " imported successfully\n")
+            text_info.configure(state="disabled")
         check_merge()
 
     def import_pdf_onepage_bot():
@@ -123,10 +125,10 @@ def showfile_pdf(root, text_info,red_frame_run,red_frame_importpdf):
         # save_path = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname, pdf_bot_filename)
         # os.makedirs(os.path.dirname(save_path), exist_ok=True)
         # shutil.copy(pdf_path_bot, save_path)
-
-        text_info.configure(state="normal")
-        text_info.insert(tk.END,"BOT SIDE " + pdf_bot_filename + " imported successfully\n")
-        text_info.configure(state="disabled")
+        if pdf_path_bot:
+            text_info.configure(state="normal")
+            text_info.insert(tk.END,"BOT SIDE " + pdf_bot_filename + " imported successfully\n")
+            text_info.configure(state="disabled")
         print(pdf_path_bot)
         check_merge()
 
@@ -170,9 +172,9 @@ def showfile_pdf(root, text_info,red_frame_run,red_frame_importpdf):
         cadfile = filedialog.askopenfilename(filetypes=[("CAD files", "*.cad")])
         cadfilename = os.path.basename(cadfile)
 
-        text_info.configure(state="normal")
-        text_info.insert(tk.END, cadfilename + " imported successfully\n")
-        text_info.configure(state="disabled")
+        # text_info.configure(state="normal")
+        # text_info.insert(tk.END, cadfilename + " imported successfully\n")
+        # text_info.configure(state="disabled")
 
         print("======",cadfilename,"======")
         data_storage.cadfilename = cadfilename
@@ -180,9 +182,14 @@ def showfile_pdf(root, text_info,red_frame_run,red_frame_importpdf):
         if not cadfile:
             print(cadfile)
         else:
-            red_frame_importpdf.config(highlightthickness=0)
-            red_frame_run.config(highlightthickness=2)
             mywindow.destroy()
+            if cadfile:
+                red_frame_importpdf.config(highlightthickness=0)
+                red_frame_run.config(highlightthickness=2)
+                text_info.configure(state="normal")
+                text_info.insert(tk.END, cadfilename + " imported successfully\n")
+                text_info.configure(state="disabled")
+            
             cutfilecad()
 
 
