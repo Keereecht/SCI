@@ -10,21 +10,6 @@ input_file_path = "parts_cadprocess/com.cad"
 
 # print(component_values)
 def extract_component_values():
-    # global component_values
-    # global alldf
-    # # สร้างลิสต์เพื่อเก็บคำที่อยู่หลัง COMPONENT
-    # alldf = data_storage.df["Ref_Des"].str.split(',').explode().tolist()
-    # component_values = []
-    
-    # with open(input_file_path, 'r') as file:
-    #     for line in file:
-    #         if line.startswith("COMPONENT"):  # ตรวจสอบว่าแถวเริ่มต้นด้วย COMPONENT
-    #             # แยกคำและดึงคำหลัง COMPONENT
-    #             value = line.split(' ', 1)[1].strip()  # ตัด 'COMPONENT ' ออก และลบช่องว่าง
-    #             component_values.append(value)
-    # print("=================================================================")
-    # print(component_values)
-    # print("=================================================================")
     global component_layer_values
     global component_values
     global combined_values
@@ -33,7 +18,7 @@ def extract_component_values():
     global alldf
 
     alldf = data_storage.df["Ref_Des"].str.split(',').explode().tolist()
-    print(alldf)
+    # print(alldf)
     checknotfound = data_storage.df[["Ref_Des", "Op_Seq"]].to_numpy()
     expanded_data = []
     for row in checknotfound:
@@ -76,12 +61,17 @@ def Filter_values(text_info):
     filtered_array[:, 1] = np.where(filtered_array[:, 1].astype(int) == 150, "TOP", 
                         np.where(filtered_array[:, 1].astype(int) == 50, "BOTTOM", 
                         np.where(filtered_array[:, 1].astype(int) > 200, "HANDLOAD", filtered_array[:, 1])))
-    # แสดงผลลัพธ์
-    # print(filtered_array)
-    # แยก filtered_combined_values ออกเป็นส่วนหน้า (value) และส่วนหลัง (layer)
-    filtered_combined_values = [
-        value.split(' ', 1) for value in combined_values if value.split()[0] in samevalue
-    ]  # ได้เป็นลิสต์ของ [ส่วนหน้า, ส่วนหลัง]
+    sorted_filtered_array = filtered_array[
+    np.lexsort((
+        filtered_array[:, 1],  # จัดเรียงตาม layer
+        np.where(filtered_array[:, 1] == "TOP", 0,  # TOP ได้ลำดับแรก
+                 np.where(filtered_array[:, 1] == "BOTTOM", 1, 2))  # BOTTOM ได้ลำดับสอง
+    ))]
+ 
+    filtered_combined_values = sorted(
+        [value.split(' ', 1) for value in combined_values if value.split()[0] in samevalue],
+        key=lambda x: (x[1] != "TOP", x[1])  # จัดเรียงโดยให้ "TOP" มาก่อน และตามด้วย layer อื่น
+    )
     data_storage.noload_cad_len = len(noload_cad)
     total_count = 0
     total_count_not = 0
@@ -115,7 +105,8 @@ def Filter_values(text_info):
     text_info.insert(tk.END, "-" * len(header) + "\n")
     text_info.insert(tk.END, header)
     text_info.insert(tk.END, "-" * len(header) + "\n")
-    for notf in filtered_array:
+
+    for notf in sorted_filtered_array:
         devicenf = notf [0]  # ตัวแรก (Device)
         layernf = notf [1]   # ตัวที่สอง (Layer)
         # count = alldf.count(notf)
