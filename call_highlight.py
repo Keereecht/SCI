@@ -22,12 +22,14 @@ import combinefile
 import pluscadname
 import cad_process_noload
 from call_loading_screen import loading_window, update_progress, close_loading_window
+from call_notfoundpdf import notfoundh
 
-def runfile(text_info, Textboxfind):
-
+def runfile(text_info, Textboxfind,Textboxnotfound):
     current_datetime = datetime.now()
     date_time = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
     data_storage.date_time = date_time
+    Textboxnotfound.configure(state="normal")
+    Textboxnotfound.delete("1.0","end")
     print(f"Current date and time: {date_time}")
 
     load_win, progress_bar = loading_window()
@@ -59,23 +61,27 @@ def runfile(text_info, Textboxfind):
             if step == 0:
                 highlight_separate_ic.run_top(text_info)
             elif step == 1:
-                highlight_separate_ic.run_bot(text_info)
-            elif step == 2:
                 highlight_separate_ic.run_top_hl(text_info)
+                # highlight_separate_ic.run_bot(text_info)
+            elif step == 2:
+                highlight_separate_ic.run_bot(text_info)
+                # highlight_separate_ic.run_top_hl(text_info)
             elif step == 3:
                 highlight_separate_ic.run_bot_hl(text_info, Textboxfind)
             elif step == 4:
                 highlight_separate_ic.noload_top()
             elif step == 5:
                 highlight_separate_ic.noload_bot()
-                
+            notfoundh(text_info)
             # อัปเดต Progress bar
             progress = (step + 1) / total_steps * 100
             update_progress(progress_bar, progress)
 
             # เพิ่มการอัปเดตหน้าต่าง Tkinter เพื่อแสดงผลทันที
             load_win.update_idletasks()
-
+        Textboxnotfound.configure(state="normal")
+        Textboxnotfound.insert(tk.END,data_storage.notfountlist)
+        Textboxnotfound.configure(state="disabled")
         highlight_separate_ic.timework()
         
         # ปิดหน้าโหลดเมื่อประมวลผลเสร็จ
@@ -122,6 +128,19 @@ def runfile(text_info, Textboxfind):
         if not data_storage.selected_customer =="Test_product":
             call_data_base.data_base_sheet()
             save_database_to_csv(text_info)
+            outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
+            text_info.tag_configure("blue", foreground="blue",font=("Arial", 10, "bold"))
+            text_info.tag_configure("bold_red", foreground="red", font=("Arial", 10, "bold"))
+            text_info.configure(state="normal")  # Enable text_info for editing
+            # text_info.insert(tk.END, f"บันทึกข้อมูลลงใน {outpathdata} เรียบร้อยแล้ว\n", "blue")
+            text_info.insert(tk.END, "บันทึกข้อมูลลงใน ")  # ส่วนข้อความปกติ
+            text_info.insert(tk.END, f"{outpathdata}", "blue")  # outpathdata ใช้ tag สีน้ำเงิน
+            text_info.insert(tk.END, " เรียบร้อยแล้ว\n")  # ส่วนข้อความปกติ
+            text_info.insert(tk.END, "***คัดลอกที่อยู่ไฟล์ในส่วนที่เป็นสีน้ำเงิน\n","bold_red")  
+            text_info.see("end")
+            text_info.configure(state="disabled")  # Disable it again to make it read-only
+
+            
         close_loading_window(load_win)
         time.sleep(1)
         messagebox.showinfo("สถานะ", "เสร็จสิ้น")
@@ -143,14 +162,16 @@ def runfile(text_info, Textboxfind):
                 highlight_compound_ic.noload_top()
             elif step == 5:
                 highlight_compound_ic.noload_bot()
-
+            notfoundh(text_info)
             # อัปเดต Progress bar
             progress = (step + 1) / total_steps * 100
             update_progress(progress_bar, progress)
             
             # เพิ่มการอัปเดตหน้าต่าง Tkinter เพื่อแสดงผลทันที
             load_win.update_idletasks()
-
+        Textboxnotfound.configure(state="normal")
+        Textboxnotfound.insert(tk.END,data_storage.notfountlist)
+        Textboxnotfound.configure(state="disabled")
         # เรียกใช้ฟังก์ชันอื่นหลังจากการประมวลผลเสร็จสิ้น
         highlight_compound_ic.timework()
         
@@ -183,6 +204,17 @@ def runfile(text_info, Textboxfind):
         if not data_storage.selected_customer == "Test_product":
             call_data_base.data_base_sheet()
             save_database_to_csv(text_info)
+            outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
+            text_info.tag_configure("blue", foreground="blue",font=("Arial", 10, "bold"))
+            text_info.tag_configure("bold_red", foreground="red", font=("Arial", 10, "bold"))
+            text_info.configure(state="normal")  # Enable text_info for editing
+            # text_info.insert(tk.END, f"บันทึกข้อมูลลงใน {outpathdata} เรียบร้อยแล้ว\n", "blue")
+            text_info.insert(tk.END, "บันทึกข้อมูลลงใน ")  # ส่วนข้อความปกติ
+            text_info.insert(tk.END, f"{outpathdata}", "blue")  # outpathdata ใช้ tag สีน้ำเงิน
+            text_info.insert(tk.END, " เรียบร้อยแล้ว\n")  # ส่วนข้อความปกติ
+            text_info.insert(tk.END, "***คัดลอกที่อยู่ไฟล์ในส่วนที่เป็นสีน้ำเงิน\n","bold_red")  
+            text_info.see("end")
+            text_info.configure(state="disabled")  # Disable it again to make it read-only
         close_loading_window(load_win)
         time.sleep(1)
         messagebox.showinfo("สถานะ", "เสร็จสิ้น")
@@ -339,6 +371,18 @@ def call_runcad(Textboxfind,text_info,Textboxnotfound):
 
         if not data_storage.selected_customer == "Test_product":
             call_data_base_cad.data_base_sheet()
+
+            outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname+"_CAD")
+            text_info.tag_configure("blue", foreground="blue",font=("Arial", 10, "bold"))
+            text_info.tag_configure("bold_red", foreground="red", font=("Arial", 10, "bold"))
+            text_info.configure(state="normal")  # Enable text_info for editing
+            # text_info.insert(tk.END, f"บันทึกข้อมูลลงใน {outpathdata} เรียบร้อยแล้ว\n", "blue")
+            text_info.insert(tk.END, "บันทึกข้อมูลลงใน ")  # ส่วนข้อความปกติ
+            text_info.insert(tk.END, f"{outpathdata}", "blue")  # outpathdata ใช้ tag สีน้ำเงิน
+            text_info.insert(tk.END, " เรียบร้อยแล้ว\n")  # ส่วนข้อความปกติ
+            text_info.insert(tk.END, "***คัดลอกที่อยู่ไฟล์ในส่วนที่เป็นสีน้ำเงิน\n","bold_red")  
+            text_info.see("end")
+            text_info.configure(state="disabled")  # Disable it again to make it read-only
 
     finally:
         close_loading_window(load_win)

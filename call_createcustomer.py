@@ -98,7 +98,7 @@ def createcustomer(display, update_combobox_callback):
         try:
             if not os.path.exists(folder_path):
                 os.makedirs(folder_path)
-                messagebox.showinfo("Success", f"สร้างโฟลเดอร์ '{folder_path}' เรียบร้อยแล้ว!")
+                messagebox.showinfo("Success", f"The customer folder was created successfully.")
             else:
                 messagebox.showwarning("Warning", f"โฟลเดอร์ '{folder_path}' มีอยู่แล้ว!")
         except Exception as e:

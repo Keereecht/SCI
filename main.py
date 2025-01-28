@@ -294,7 +294,7 @@ def Run_highlight():
         if not data_storage.projectname:
             messagebox.showerror("ERROR","Please create project name before proceeding.")
         if data_storage.pdf_path:
-            call_highlight.runfile(text_info, Textboxfind)
+            call_highlight.runfile(text_info, Textboxfind,Textboxnotfound)
             red_frame_run.config(highlightthickness=0)
             red_frame_button_createprojectname.config(highlightthickness=2)
             resetfile.reset_files()
@@ -307,7 +307,7 @@ def Run_highlight():
         if not data_storage.pdf_bot_filename:
             messagebox.showerror("ERROR","Please import a PDF BOT file before proceeding.")
         else:
-            call_highlight.runfile(text_info, Textboxfind)
+            call_highlight.runfile(text_info, Textboxfind,Textboxnotfound)
             red_frame_run.config(highlightthickness=0)
             red_frame_button_createprojectname.config(highlightthickness=2)
             resetfile.reset_files()

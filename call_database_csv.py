@@ -63,6 +63,6 @@ def save_database_to_csv(text_info):
     # บันทึกข้อมูลลงในไฟล์ CSV
     df.to_csv(csv_file, index=False)
     print(f"บันทึกข้อมูลลงในไฟล์ CSV ที่: {csv_file} เรียบร้อยแล้ว")
-    text_info.configure(state="normal")  # Enable text_info for editing
-    text_info.insert(tk.END, f"บันทึกข้อมูลลงในไฟล์ CSV ที่: {csv_file} เรียบร้อยแล้ว\n")
-    text_info.configure(state="disabled")  # Disable it again to make it read-only
+    # text_info.configure(state="normal")  # Enable text_info for editing
+    # text_info.insert(tk.END, f"บันทึกข้อมูลลงในไฟล์ CSV ที่: {csv_file} เรียบร้อยแล้ว\n")
+    # text_info.configure(state="disabled")  # Disable it again to make it read-only
