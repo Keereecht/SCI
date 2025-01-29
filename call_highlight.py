@@ -15,6 +15,7 @@ import call_data_base_cad
 from call_coversheet import info_over_all
 from call_coversheet import info_over_all_ic
 from call_database_csv import save_database_to_csv
+from call_database_csvcad import save_database_to_csv_cad
 import data_storage
 from io import BytesIO
 import compound_countcad
@@ -371,6 +372,7 @@ def call_runcad(Textboxfind,text_info,Textboxnotfound):
 
         if not data_storage.selected_customer == "Test_product":
             call_data_base_cad.data_base_sheet()
+            save_database_to_csv_cad()
 
             outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname+"_CAD")
             text_info.tag_configure("blue", foreground="blue",font=("Arial", 10, "bold"))

@@ -68,21 +68,10 @@ def data_base_sheet():
         next_project_id = last_project_id + 1
     # กำหนดค่าเริ่มต้นสำหรับค่าที่อาจเป็น None
     cadname = data_storage.cadfilename if data_storage.cadfilename else ""
-    # pdf_top_filename = data_storage.pdf_top_filename if data_storage.pdf_top_filename else ""
-    # pdf_bot_filename = data_storage.pdf_bot_filename if data_storage.pdf_bot_filename else ""
     outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
 
     # เพิ่ม project_id และ customer ในแถวถัดไป
-    if not data_storage.iccall_value:
-        # customer_values = [
-        #     [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_top_filename, data_storage.page_top +1,data_storage.projectname + "_TOP_SMT", int(data_storage.sum_qty_top), int(data_storage.sum_find_top), data_storage.Not_found_top, data_storage.percent_top_smt, data_storage.time_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-        #     [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_top_filename, data_storage.page_top +1,data_storage.projectname + "_TOP_Handload",int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop), data_storage.Not_found_hltop, data_storage.percent_top_hltop, data_storage.time_hl_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-        #     [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_top_filename, data_storage.page_top +1,data_storage.projectname + "_TOP_Noload",int(data_storage.total_count_top),int(data_storage.total_count_top), 0, 100, data_storage.time_no_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-        #     [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_bot_filename, data_storage.page_bot +1,data_storage.projectname + "_BOT_SMT",int(data_storage.sum_qty_bot), int(data_storage.sum_find_bot), data_storage.Not_found_bot, data_storage.percent_bot_smt, data_storage.time_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-        #     [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_bot_filename, data_storage.page_bot +1,data_storage.projectname + "_BOT_Handload",int(data_storage.sum_qty_hlbot), int(data_storage.sum_find_hlbot), data_storage.Not_found_hlbot, data_storage.percent_bot_hlbot, data_storage.time_hl_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-        #     [next_project_id, data_storage.selected_customer, data_storage.projectname, data_storage.filenamecsv, pdfname + pdf_bot_filename, data_storage.page_bot +1,data_storage.projectname + "_BOT_Noload",int(data_storage.total_count_bot),int(data_storage.total_count_bot), 0, 100, data_storage.time_no_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata]
-        # ]
-        customer_values = [
+    customer_values = [
             [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname + '_cad_top_filename','None',data_storage.projectname + "_TOP_SMT", int(data_storage.sum_qty_top), int(data_storage.sum_find_top), data_storage.Not_found_top, int(data_storage.percent_top_smt), data_storage.time_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
             [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname + '_cad_bot_filename','None',data_storage.projectname + "_BOT_SMT",int(data_storage.sum_qty_bot), int(data_storage.sum_find_bot), data_storage.Not_found_bot, int(data_storage.percent_bot_smt), data_storage.time_bot, data_storage.logged_in_user,data_storage.date_time,outpathdata],
 
@@ -96,3 +85,23 @@ def data_base_sheet():
     last_row = len(col_values) + 1
     # ปรับช่วงการอัปเดตให้สอดคล้องกับจำนวนแถวของข้อมูล
     sheet.update(f'A{last_row}:O{last_row + len(customer_values) - 1}', customer_values)
+    increment_countemail(client)
+def increment_countemail(client):
+    try:
+        # เปิด worksheet ที่ชื่อว่า "countemail"
+        count_sheet = client.open(filesheet).worksheet("countemail")
+
+        # อ่านค่าปัจจุบันจากเซลล์ A1 (หรือเซลล์อื่นที่ใช้เก็บค่า count)
+        current_count = count_sheet.acell("A2").value
+
+        # ถ้าค่าปัจจุบันเป็น None หรือว่าง ให้เริ่มจาก 0
+        if current_count is None or current_count == "":
+            new_count = 1
+        else:
+            new_count = int(current_count) + 1  # บวกค่า +1
+        count_sheet.update("A2", [[new_count]])
+
+        print(f"ค่า countemail ถูกเพิ่มเป็น {new_count}")
+    
+    except Exception as e:
+        print(f"เกิดข้อผิดพลาดในการอัปเดต countemail: {e}")

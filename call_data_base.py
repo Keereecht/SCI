@@ -104,3 +104,24 @@ def data_base_sheet():
     last_row = len(col_values) + 1
     # ปรับช่วงการอัปเดตให้สอดคล้องกับจำนวนแถวของข้อมูล
     sheet.update(f'A{last_row}:O{last_row + len(customer_values) - 1}', customer_values)
+    increment_countemail(client)
+
+def increment_countemail(client):
+    try:
+        # เปิด worksheet ที่ชื่อว่า "countemail"
+        count_sheet = client.open(filesheet).worksheet("countemail")
+
+        # อ่านค่าปัจจุบันจากเซลล์ A1 (หรือเซลล์อื่นที่ใช้เก็บค่า count)
+        current_count = count_sheet.acell("A2").value
+
+        # ถ้าค่าปัจจุบันเป็น None หรือว่าง ให้เริ่มจาก 0
+        if current_count is None or current_count == "":
+            new_count = 1
+        else:
+            new_count = int(current_count) + 1  # บวกค่า +1
+        count_sheet.update("A2", [[new_count]])
+
+        print(f"ค่า countemail ถูกเพิ่มเป็น {new_count}")
+    
+    except Exception as e:
+        print(f"เกิดข้อผิดพลาดในการอัปเดต countemail: {e}")
