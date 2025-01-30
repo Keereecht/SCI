@@ -150,11 +150,12 @@ def import_csv_data():
     if data_storage.projectname is None:
         messagebox.showerror("ERROR", "Please create project name first.")
     else:
-        open_file_csv(text_info,Textboxtotal)
+        open_file_csv(text_info,Textboxtotal,red_frame_importpdf)
         if data_storage.filenamecsv:
-            red_frame_importcsv.config(highlightthickness=0)
-            red_frame_importpdf.config(highlightthickness=2)
             red_frame_run.config(highlightthickness=0)
+            red_frame_importcsv.config(highlightthickness=0)
+        # data_storage.filenamecsv:
+
             
 def open_pdf_window():
     

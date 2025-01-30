@@ -7,22 +7,16 @@ from tkinter import messagebox
 # -----------------------------
 import data_storage
 
-def open_file_csv(text_info,Textboxtotal):
+def open_file_csv(text_info,Textboxtotal,red_frame_importpdf):
     filepathcsv = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
     if not filepathcsv:
         return
     filenamecsv = os.path.basename(filepathcsv)
     data_storage.filenamecsv = filenamecsv
-
-    # Textboxreadfilecsv.configure(state="normal")
-    # Textboxreadfilecsv.delete("1.0", "end")
-    # Textboxreadfilecsv.insert(tk.END, filepathcsv)
-    # Textboxreadfilecsv.configure(state="disabled")
-
-    # text_info.configure(state="normal")
-    # text_info.insert(tk.END, filenamecsv + " imported successfully\n")
-    # text_info.configure(state="disabled")
-
+    if filenamecsv:
+        # red_frame_importcsv.config(highlightthickness=0)
+        red_frame_importpdf.config(highlightthickness=2)
+        # red_frame_run.config(highlightthickness=0)
     with open(filepathcsv, "r", encoding='ISO-8859-1') as myfile:
         start_collecting = False
         text = ""

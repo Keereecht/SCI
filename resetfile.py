@@ -5,3 +5,4 @@ def reset_files():
     data_storage.pdf_bot_filename = ""
     data_storage.cadfile = ""
     data_storage.projectname = None
+    data_storage.filenamecsv = ""
