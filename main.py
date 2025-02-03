@@ -38,6 +38,7 @@ display.update_idletasks()
 # ---------------------
 # display.resizable(False, False)
 load_csv_data()
+
 # ฟังก์ชันโหลดโลโก้ในพื้นหลัง
 def load_logo_image():
     logo_image_path = "image/minisanmina.png"
@@ -464,16 +465,6 @@ data_label_notfound.pack(side='left', padx=(3, 5), pady=5)
 Textboxnotfound = Text(total_frame, height=1, width=6, state="disabled")
 Textboxnotfound.pack(side='left', padx=(3, 0), pady=5)
 
-# data_label_notfound = ttk.Label(total_frame, text="Found", background="#D9D9D9", font=("Arial", 8), foreground="black")
-# data_label_notfound.pack(side='left', padx=(3, 5), pady=5)
-# -------------------------------------------------
-# f_merge = tk.Frame(left_frame, bg="#D9D9D9")
-# f_merge.grid(row=7, column=0, columnspan=3, padx=2, pady=2, sticky='w')
-# merge = tk.Button(f_merge, text="Merge")
-# merge.grid(row=7, column=2, padx=0, pady=0, sticky='w')
-# -------------------------------------------------
-# Information text box
-
 show_info_all = tk.Frame(left_frame)
 show_info_all.grid(row=5, column=0, columnspan=3, sticky='nsew', padx=5, pady=10)
 
@@ -486,6 +477,9 @@ show_info_all.grid_columnconfigure(0, weight=1)
 vscrollbar_text_widget.config(command=text_info.yview)
 left_frame.grid_rowconfigure(5, minsize=150)
 
+text_info.configure(state="normal")
+text_info.insert(tk.END, f"combinefile: {data_storage.combinefile_value}\n")
+text_info.configure(state="disabled")
 # R Table Frame
 table_frame = tk.Frame(display, bg="#DCDCDC")
 table_frame.grid(row=1, column=1, columnspan=2, sticky='nsew', padx=5, pady=5)

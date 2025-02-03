@@ -3,6 +3,7 @@ import data_storage
 import pandas as pd
 from call_data_base import readapikey
 from call_data_base_cad import readapikey_cad
+import tkinter as tk
 filepath = 'Config/Config.text'
 config_lines = None  # ใช้ตัวแปรเก็บค่าที่อ่านแล้ว
 readapikey()
@@ -107,12 +108,21 @@ def read_config():
     print(credentials)
     return credentials
 
+def read_combinefile(config_lines):
+    if not hasattr(data_storage, 'combinefile') or not data_storage.combinefile:
+        for line in config_lines:
+            if line.startswith('combinefile'):
+                combinefile_value = line.split('=')[1].strip()
+                data_storage.combinefile_value = combinefile_value
+                print(f"combinefile: {combinefile_value}")  # Debug print
+                
 # เรียกใช้ฟังก์ชันเพียงครั้งเดียว
 config_lines = read_config_file(filepath)
 if config_lines:  # ตรวจสอบว่ามีการอ่านไฟล์ได้สำเร็จหรือไม่
     versions = read_version_update(config_lines)
     main_outpath = read_name_main_folder(config_lines)
     main_outpath_cad = read_name_main_folder_cad(config_lines)
+    read_combinefile(config_lines)
     worksheet = read_name_worksheet(config_lines)
     credentials = read_config() 
     create_empty_database_csv()

@@ -12,7 +12,7 @@ def rename_project_folder():
         print(f"เปลี่ยนชื่อโฟลเดอร์จาก '{old_folder_name}' เป็น '{new_folder_name}' สำเร็จ")
 
         # สร้างโฟลเดอร์ 'test' ในโฟลเดอร์ที่เปลี่ยนชื่อแล้ว
-        test_folder_path = os.path.join(new_folder_name, "Outputimage")
+        test_folder_path = os.path.join(new_folder_name, data_storage.projectname+"_outputimage")
         os.makedirs(test_folder_path, exist_ok=True)
         print(f"สร้างโฟลเดอร์ 'test' ที่ '{test_folder_path}' สำเร็จ")
     except FileNotFoundError as e:
