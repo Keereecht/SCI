@@ -106,7 +106,14 @@ user_text = tk.Text(right_frame, height=1, width=15, font=("Arial", 10), fg="blu
 user_text.grid(row=1, column=0, sticky='e', padx=5, pady=5)
 
 # กำหนดค่าเริ่มต้นให้กับ Combobox
-customer_names = data_storage.customer_data['Customer_name'].tolist() if hasattr(data_storage, 'customer_data') else []
+# customer_names = data_storage.customer_data['Customer_name'].tolist() if hasattr(data_storage, 'customer_data') else []
+customer_names = sorted(data_storage.customer_data['Customer_name'].tolist()) if hasattr(data_storage, 'customer_data') else []
+if "TEST_PRODUCT" in customer_names:
+    customer_names.remove("TEST_PRODUCT")  # นำออกจากลิสต์ชั่วคราว
+    customer_names = sorted(customer_names)  # เรียงลำดับ A-Z
+    customer_names.append("TEST_PRODUCT")  # ใส่ TEST_PRODUCT กลับไปที่ท้ายสุด
+else:
+    customer_names = sorted(customer_names)  # ถ้าไม่มี TEST_PRODUCT ก็เรียงปกติ
 combobox_customer = ttk.Combobox(display, state="readonly", values=customer_names)
 combobox_customer.grid(row=1, column=0, padx=5, pady=5, sticky='w')
 
@@ -121,9 +128,16 @@ def createcustomerwindows():
     createcustomer(display, update_combobox_values)  # ส่งฟังก์ชัน update_combobox_values ไปให้ createcustomer
 
 def update_combobox_values(values):
-    """อัปเดตค่าใน Combobox ของ main.py"""
-    combobox_customer['values'] = values  # อัปเดตค่าของ Combobox
-
+    # sorted_values = sorted(values)  # เรียงค่าจาก A-Z
+    # combobox_customer['values'] = sorted_values  # อัปเดตค่าของ Combobox
+    if "TEST_PRODUCT" in values:
+        values.remove("TEST_PRODUCT")
+        sorted_values = sorted(values)  # เรียงค่าตาม A-Z
+        sorted_values.append("TEST_PRODUCT")  # ใส่ TEST_PRODUCT ที่ท้ายสุด
+    else:
+        sorted_values = sorted(values)
+    
+    combobox_customer['values'] = sorted_values  # อัปเดต Combobox
 def on_select(event):
     selection = combobox_customer.get()
     data_storage.selected_customer = selection
@@ -151,13 +165,8 @@ def import_csv_data():
     if data_storage.projectname is None:
         messagebox.showerror("ERROR", "Please create project name first.")
     else:
-        open_file_csv(text_info,Textboxtotal,red_frame_importpdf)
-        if data_storage.filenamecsv:
-            red_frame_run.config(highlightthickness=0)
-            red_frame_importcsv.config(highlightthickness=0)
-        # data_storage.filenamecsv:
-
-            
+        open_file_csv(text_info, Textboxtotal, red_frame_importpdf, red_frame_importcsv, red_frame_run)
+       
 def open_pdf_window():
     
     if not data_storage.filenamecsv:

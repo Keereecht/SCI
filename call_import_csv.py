@@ -7,16 +7,17 @@ from tkinter import messagebox
 # -----------------------------
 import data_storage
 
-def open_file_csv(text_info,Textboxtotal,red_frame_importpdf):
+def open_file_csv(text_info, Textboxtotal, red_frame_importpdf, red_frame_importcsv, red_frame_run):
     filepathcsv = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
     if not filepathcsv:
         return
     filenamecsv = os.path.basename(filepathcsv)
     data_storage.filenamecsv = filenamecsv
     if filenamecsv:
-        # red_frame_importcsv.config(highlightthickness=0)
+        red_frame_run.config(highlightthickness=0)
+        red_frame_importcsv.config(highlightthickness=0)
         red_frame_importpdf.config(highlightthickness=2)
-        # red_frame_run.config(highlightthickness=0)
+  
     with open(filepathcsv, "r", encoding='ISO-8859-1') as myfile:
         start_collecting = False
         text = ""
@@ -34,6 +35,9 @@ def open_file_csv(text_info,Textboxtotal,red_frame_importpdf):
             text_info.configure(state="disabled")
             filepathcsv =""
             data_storage.filenamecsv = ""  # รีเซ็ตค่าใน data_storage ด้วย
+            red_frame_run.config(highlightthickness=0)
+            red_frame_importcsv.config(highlightthickness=2)
+            red_frame_importpdf.config(highlightthickness=0)
             return  # หยุดการทำงานของฟังก์ชันทันที
 
     text_info.configure(state="normal")

@@ -126,7 +126,7 @@ def runfile(text_info, Textboxfind,Textboxnotfound):
         data_storage.percent_bot_hlbot = (data_storage.sum_find_hlbot / data_storage.sum_qty_hlbot * 100) if data_storage.sum_qty_hlbot != 0 else 0
 
         info_over_all_ic()
-        if not data_storage.selected_customer =="Test_product":
+        if not data_storage.selected_customer =="TEST_PRODUCT":
             call_data_base.data_base_sheet()
             save_database_to_csv(text_info)
             outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
@@ -202,7 +202,7 @@ def runfile(text_info, Textboxfind,Textboxnotfound):
 
         # แสดงผลข้อมูลสรุป
         info_over_all()
-        if not data_storage.selected_customer == "Test_product":
+        if not data_storage.selected_customer == "TEST_PRODUCT":
             call_data_base.data_base_sheet()
             save_database_to_csv(text_info)
             outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
@@ -370,7 +370,7 @@ def call_runcad(Textboxfind,text_info,Textboxnotfound):
         data_storage.percent_bot_smt = round(data_storage.sum_find_bot / data_storage.sum_qty_bot * 100) if data_storage.sum_qty_bot != 0 else 0
         data_storage.percent_bot_hlbot = round(data_storage.sum_find_hlbot / data_storage.sum_qty_hlbot * 100) if data_storage.sum_qty_hlbot != 0 else 0
 
-        if not data_storage.selected_customer == "Test_product":
+        if not data_storage.selected_customer == "TEST_PRODUCT":
             call_data_base_cad.data_base_sheet()
             save_database_to_csv_cad()
 
@@ -385,6 +385,17 @@ def call_runcad(Textboxfind,text_info,Textboxnotfound):
             text_info.insert(tk.END, "***คัดลอกที่อยู่ไฟล์ในส่วนที่เป็นสีน้ำเงิน\n","bold_red")  
             text_info.see("end")
             text_info.configure(state="disabled")  # Disable it again to make it read-only
+        outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname+"_CAD")
+        text_info.tag_configure("blue", foreground="blue",font=("Arial", 10, "bold"))
+        text_info.tag_configure("bold_red", foreground="red", font=("Arial", 10, "bold"))
+        text_info.configure(state="normal")  # Enable text_info for editing
+        # text_info.insert(tk.END, f"บันทึกข้อมูลลงใน {outpathdata} เรียบร้อยแล้ว\n", "blue")
+        text_info.insert(tk.END, "บันทึกข้อมูลลงใน ")  # ส่วนข้อความปกติ
+        text_info.insert(tk.END, f"{outpathdata}", "blue")  # outpathdata ใช้ tag สีน้ำเงิน
+        text_info.insert(tk.END, " เรียบร้อยแล้ว\n")  # ส่วนข้อความปกติ
+        text_info.insert(tk.END, "***คัดลอกที่อยู่ไฟล์ในส่วนที่เป็นสีน้ำเงิน\n","bold_red")  
+        text_info.see("end")
+        text_info.configure(state="disabled")  # Disable it again to make it read-only
 
     finally:
         close_loading_window(load_win)
