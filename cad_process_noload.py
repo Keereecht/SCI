@@ -113,7 +113,8 @@ def Filter_values(text_info):
         total_count_not += 1
         formatted_text = (
             f"{str(total_count_not).ljust(count_width)}"
-            f"{layernf.ljust(count_layer)}"
+            # f"{layernf.ljust(count_layer)}"
+            f"{str(layernf).ljust(count_layer)}"
             f"{devicenf.ljust(value_width)}"
             f"{'Not found'.ljust(result_width)}\n"
         )
