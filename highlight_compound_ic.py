@@ -37,7 +37,7 @@ def run_top(text_info): # ใช้ text_widget จาก global
         doc = fitz.Document(stream=data_storage.pdf_path)
     else:
         doc = fitz.open(data_storage.pdf_path)
-    page = doc.load_page(data_storage.page_top)
+    page = doc.load_page(data_storage.page_bot)
     words = page.get_text("words")
     collected_values_list = []
     count_list = []
@@ -159,8 +159,6 @@ def run_bot(text_info):
         is_res = des.startswith('RES') or des.startswith('SMD RES')
         is_ic = des.startswith('IC')
         for word in filtered_words:
-            if is_ic and not data_storage.iccall_value:
-                continue  # ข้ามการไฮไลท์ถ้าเป็น IC
             loop_counter += 1
             count += 1
             original_rect = fitz.Rect(word[:4])
