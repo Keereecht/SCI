@@ -15,7 +15,7 @@ pass,1
 
 ------------------------------
 database,"Config/keereeAPI.json"
-filesheetname,"pdf_database"
+filesheetname,"python_database"
 worksheet,database
 ----select-short-or-long-------
 combinefile = short

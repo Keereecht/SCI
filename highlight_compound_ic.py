@@ -272,7 +272,7 @@ def run_top_hl(text_info):
     doc.save(output_path_hl_top)
     data_storage.data_hl_top['Actual_fond(EA)'] = collected_values_list
     data_storage.data_hl_top['PDF_Actual(EA)'] = count_list
-    data_storage.df.loc[(data_storage.df['Op_Seq'] > 190) & (data_storage.df['Op_Seq'] <= 600), 
+    data_storage.df.loc[(data_storage.df['Op_Seq'] > 160) & (data_storage.df['Op_Seq'] <= 600), 
     ['Actual_fond(EA)', 'PDF_Actual(EA)']] = data_storage.data_hl_top[['Actual_fond(EA)', 'PDF_Actual(EA)']].values
     diff_list = []
     for index, row in data_storage.data_hl_top.iterrows():
@@ -338,7 +338,7 @@ def run_bot_hl(text_info, Textboxfind):
     doc.save(output_path_hl_bot)
     data_storage.data_hl_bot['Actual_fond(EA)'] = collected_values_list
     data_storage.data_hl_bot['PDF_Actual(EA)'] = count_list
-    data_storage.df.loc[(data_storage.df['Op_Seq'] > 190) & (data_storage.df['Op_Seq'] <= 600), 
+    data_storage.df.loc[(data_storage.df['Op_Seq'] > 160) & (data_storage.df['Op_Seq'] <= 600), 
     ['Actual_fond(EA)', 'PDF_Actual(EA)']] = data_storage.data_hl_bot[['Actual_fond(EA)', 'PDF_Actual(EA)']].values
     diff_list = []
     for index, row in data_storage.data_hl_bot.iterrows():

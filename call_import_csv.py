@@ -62,20 +62,25 @@ def open_file_csv(text_info, Textboxtotal, red_frame_importpdf, red_frame_import
     # print(df)
     data_storage.df = df
 
-    total_sum = df['BOM_Target(EA)'].sum()
-    Textboxtotal.configure(state="normal")
-    Textboxtotal.delete("1.0", "end")
-    Textboxtotal.insert(tk.END, int(total_sum))
-    Textboxtotal.configure(state="disabled")
+    # total_sum = df['BOM_Target(EA)'].sum()
+    # print(total_sum,"--------")
+    # Textboxtotal.configure(state="normal")
+    # Textboxtotal.delete("1.0", "end")
+    # Textboxtotal.insert(tk.END, int(total_sum))
+    # Textboxtotal.configure(state="disabled")
 
     data_top = df[df['Op_Seq'] == 150].copy()
     data_buttom = df[df['Op_Seq'] == 50].copy()
     data_ic_top = df[(df['Op_Seq'] == 150) & (df['Item_Description'].str.startswith("IC"))].copy()
     data_ic_bot = df[(df['Op_Seq'] == 50) & (df['Item_Description'].str.startswith("IC"))].copy()
 
-    data_hl_top = df[(df['Op_Seq'] > 190) & (df['Op_Seq'] <= 600)].copy()
+    data_hl_top = df[(df['Op_Seq'] > 160) & (df['Op_Seq'] <= 600)].copy()
     data_hl_bot = data_hl_top.copy()
 
+    t = data_top['BOM_Target(EA)'].sum()
+    b = data_buttom['BOM_Target(EA)'].sum()
+    h = data_hl_top['BOM_Target(EA)'].sum()
+    print(t,b,h)
     noload_top_h = pd.concat([data_top, data_hl_top], ignore_index=True).copy()
     noload_bot_h = pd.concat([data_buttom, data_hl_bot], ignore_index=True).copy()
     
