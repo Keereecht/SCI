@@ -4,15 +4,19 @@ import os
 from tkinter import filedialog 
 import tkinter as tk
 from tkinter import messagebox
+import addcustumerlistemail
 # -----------------------------
 import data_storage
+import lenagile
 
 def open_file_csv(text_info, Textboxtotal, red_frame_importpdf, red_frame_importcsv, red_frame_run):
     filepathcsv = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+    data_storage.filepathcsv = filepathcsv
     if not filepathcsv:
         return
     filenamecsv = os.path.basename(filepathcsv)
     data_storage.filenamecsv = filenamecsv
+    addcustumerlistemail.sync_customer_with_listemail() #เรียกใช้เช็คsheet
     if filenamecsv:
         red_frame_run.config(highlightthickness=0)
         red_frame_importcsv.config(highlightthickness=0)
@@ -80,7 +84,13 @@ def open_file_csv(text_info, Textboxtotal, red_frame_importpdf, red_frame_import
     t = data_top['BOM_Target(EA)'].sum()
     b = data_buttom['BOM_Target(EA)'].sum()
     h = data_hl_top['BOM_Target(EA)'].sum()
+    total_sum = t + b + h
     print(t,b,h)
+    Textboxtotal.configure(state="normal")
+    Textboxtotal.delete("1.0", "end")
+    Textboxtotal.insert(tk.END, int(total_sum))
+    Textboxtotal.configure(state="disabled")
+
     noload_top_h = pd.concat([data_top, data_hl_top], ignore_index=True).copy()
     noload_bot_h = pd.concat([data_buttom, data_hl_bot], ignore_index=True).copy()
     
@@ -136,3 +146,5 @@ def open_file_csv(text_info, Textboxtotal, red_frame_importpdf, red_frame_import
     data_storage.ic_bot = ic_bot
     data_storage.hl_bot = hl_bot
     data_storage.other_bot = other_bot
+    print("เช็คความถูกต้อง")
+    lenagile.check_all_data(data_storage,text_info)

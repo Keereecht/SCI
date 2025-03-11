@@ -24,7 +24,8 @@ import pluscadname
 import cad_process_noload
 from call_loading_screen import loading_window, update_progress, close_loading_window
 from call_notfoundpdf import notfoundh
-
+import copyfilepdfandcsv
+# import addcustumerlistemail
 def runfile(text_info, Textboxfind,Textboxnotfound):
     current_datetime = datetime.now()
     date_time = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
@@ -58,6 +59,7 @@ def runfile(text_info, Textboxfind,Textboxnotfound):
     text_info.update()
 
     if not data_storage.iccall_value:
+        print("run1")
         for step in range(total_steps):
             if step == 0:
                 highlight_separate_ic.run_top(text_info)
@@ -127,6 +129,9 @@ def runfile(text_info, Textboxfind,Textboxnotfound):
 
         info_over_all_ic()
         if not data_storage.selected_customer =="TEST_PRODUCT":
+
+            copyfilepdfandcsv.copy_files()
+            # addcustumerlistemail.sync_customer_with_listemail()
             call_data_base.data_base_sheet()
             save_database_to_csv(text_info)
             outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
@@ -155,7 +160,9 @@ def runfile(text_info, Textboxfind,Textboxnotfound):
         close_loading_window(load_win)
         time.sleep(1)
         messagebox.showinfo("สถานะ", "เสร็จสิ้น")
+
     if data_storage.iccall_value:
+        print("run2")
     # กำหนดจำนวนขั้นตอนเพื่อใช้กับ Progress bar
         total_steps = 6
         for step in range(total_steps):
@@ -213,6 +220,9 @@ def runfile(text_info, Textboxfind,Textboxnotfound):
         # แสดงผลข้อมูลสรุป
         info_over_all()
         if not data_storage.selected_customer == "TEST_PRODUCT":
+            
+            copyfilepdfandcsv.copy_files()
+            # addcustumerlistemail.sync_customer_with_listemail()
             call_data_base.data_base_sheet()
             save_database_to_csv(text_info)
             outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
@@ -394,6 +404,7 @@ def call_runcad(Textboxfind,text_info,Textboxnotfound):
         data_storage.percent_bot_hlbot = round(data_storage.sum_find_hlbot / data_storage.sum_qty_hlbot * 100) if data_storage.sum_qty_hlbot != 0 else 0
 
         if not data_storage.selected_customer == "TEST_PRODUCT":
+            # addcustumerlistemail.sync_customer_with_listemail()
             call_data_base_cad.data_base_sheet()
             save_database_to_csv_cad()
 

@@ -78,15 +78,56 @@ def createcustomer(display, update_combobox_callback):
         tree.insert('', 'end', values=[row['Customer_name']])
     tree.pack(pady=20, padx=20, fill='both', expand=True)
 
+    # def add_customer_name():
+    #     global df
+    #     new_customer_name = simpledialog.askstring("Input", "Enter new Customer name:", parent=mywindow)
+        
+    #     # Validation: check if input is provided, starts with uppercase, and is not a duplicate
+    #     if not new_customer_name or not new_customer_name[0].isupper() or not new_customer_name.isalpha() or new_customer_name in df['Customer_name'].values:
+    #         messagebox.showwarning("Invalid Input", "Invalid or duplicate Customer name! Make sure it starts with an uppercase letter and contains only letters.")
+    #         return
+        
+    #     new_data = pd.DataFrame([[new_customer_name]], columns=['Customer_name'])
+    #     df = pd.concat([df, new_data], ignore_index=True)
+    #     df.to_csv(csv_file_path, index=False)
+    #     data_storage.customer_data = df
+    #     tree.insert('', 'end', values=[new_customer_name])
+        
+    #     # สร้างโฟลเดอร์ใหม่ตาม Customer_name
+    #     folder_path = os.path.join(data_storage.Main_folder, new_customer_name)
+    #     try:
+    #         if not os.path.exists(folder_path):
+    #             os.makedirs(folder_path)
+    #             messagebox.showinfo("Success", f"The customer folder was created successfully.")
+    #         else:
+    #             messagebox.showwarning("Warning", f"โฟลเดอร์ '{folder_path}' มีอยู่แล้ว!")
+    #     except Exception as e:
+    #         messagebox.showerror("Error", f"เกิดข้อผิดพลาดในการสร้างโฟลเดอร์: {str(e)}")
+    #         return
+
+    #     # อัปเดตค่าใน Combobox
+    #     update_combobox_callback(df['Customer_name'].tolist())
     def add_customer_name():
         global df
-        new_customer_name = simpledialog.askstring("Input", "Enter new Customer name:", parent=mywindow)
+        new_customer_name = simpledialog.askstring("เพิ่มลูกค้า", "กรุณากรอกชื่อลูกค้า:", parent=mywindow)
         
-        # Validation: check if input is provided, starts with uppercase, and is not a duplicate
-        if not new_customer_name or not new_customer_name[0].isupper() or not new_customer_name.isalpha() or new_customer_name in df['Customer_name'].values:
-            messagebox.showwarning("Invalid Input", "Invalid or duplicate Customer name! Make sure it starts with an uppercase letter and contains only letters.")
+        # ตรวจสอบว่าผู้ใช้ป้อนข้อมูลหรือไม่
+        if not new_customer_name:
+            messagebox.showwarning("ข้อผิดพลาด", "กรุณากรอกชื่อลูกค้า!")
             return
         
+        # ตรวจสอบห้ามมีช่องว่าง
+        if " " in new_customer_name:
+            messagebox.showwarning("ข้อผิดพลาด", "ห้ามมีช่องว่างในชื่อลูกค้า!")
+            return
+
+        # ตรวจสอบว่าชื่อนี้มีอยู่แล้วหรือไม่ (ไม่สนตัวพิมพ์เล็ก-ใหญ่)
+        existing_names = [name.lower() for name in df['Customer_name'].values]
+        if new_customer_name.lower() in existing_names:
+            messagebox.showwarning("ข้อผิดพลาด", f"ชื่อลูกค้า '{new_customer_name}' มีอยู่แล้ว!")
+            return
+
+        # เพิ่มข้อมูลใหม่
         new_data = pd.DataFrame([[new_customer_name]], columns=['Customer_name'])
         df = pd.concat([df, new_data], ignore_index=True)
         df.to_csv(csv_file_path, index=False)
@@ -98,15 +139,16 @@ def createcustomer(display, update_combobox_callback):
         try:
             if not os.path.exists(folder_path):
                 os.makedirs(folder_path)
-                messagebox.showinfo("Success", f"The customer folder was created successfully.")
+                messagebox.showinfo("สำเร็จ", f"สร้างโฟลเดอร์ '{new_customer_name}' เรียบร้อยแล้ว!")
             else:
-                messagebox.showwarning("Warning", f"โฟลเดอร์ '{folder_path}' มีอยู่แล้ว!")
+                messagebox.showwarning("แจ้งเตือน", f"โฟลเดอร์ '{folder_path}' มีอยู่แล้ว!")
         except Exception as e:
-            messagebox.showerror("Error", f"เกิดข้อผิดพลาดในการสร้างโฟลเดอร์: {str(e)}")
+            messagebox.showerror("ข้อผิดพลาด", f"เกิดข้อผิดพลาดในการสร้างโฟลเดอร์: {str(e)}")
             return
 
         # อัปเดตค่าใน Combobox
         update_combobox_callback(df['Customer_name'].tolist())
+
 
 
     def delete_customer_name():

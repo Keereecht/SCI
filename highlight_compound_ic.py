@@ -20,6 +20,26 @@ import re
 import data_storage
 from io import BytesIO
 # --------------call-all-pass-----------
+import fitz  # PyMuPDF
+import os
+import time
+import tkinter as tk
+from tkinter import messagebox
+from io import BytesIO
+import fitz  # PyMuPDF
+import os
+import time
+import tkinter as tk
+from tkinter import messagebox
+from io import BytesIO
+
+import fitz  # PyMuPDF
+import os
+import time
+import tkinter as tk
+from tkinter import messagebox
+from io import BytesIO
+
 def run_top(text_info): # ใช้ text_widget จาก global
     global loop_counter
     global elapsed_time_top
@@ -37,7 +57,7 @@ def run_top(text_info): # ใช้ text_widget จาก global
         doc = fitz.Document(stream=data_storage.pdf_path)
     else:
         doc = fitz.open(data_storage.pdf_path)
-    page = doc.load_page(data_storage.page_bot)
+    page = doc.load_page(data_storage.page_top)
     words = page.get_text("words")
     collected_values_list = []
     count_list = []
@@ -124,8 +144,8 @@ def run_top(text_info): # ใช้ text_widget จาก global
     os.makedirs(os.path.dirname(file_path_top), exist_ok=True)
     data_storage.data_top.to_csv(file_path_top, index=False)
     end_time_top = time.time()
-    elapsed_time_top = end_time_top - start_time_top
-        
+    elapsed_time_top = end_time_top - start_time_top    
+
 def run_bot(text_info):
     global loop_counter
     global elapsed_time_bot
@@ -157,7 +177,6 @@ def run_bot(text_info):
         count = 0
         is_cap = des.startswith('CAP') or des.startswith('SMD CAP')
         is_res = des.startswith('RES') or des.startswith('SMD RES')
-        is_ic = des.startswith('IC')
         for word in filtered_words:
             loop_counter += 1
             count += 1
@@ -272,7 +291,7 @@ def run_top_hl(text_info):
     doc.save(output_path_hl_top)
     data_storage.data_hl_top['Actual_fond(EA)'] = collected_values_list
     data_storage.data_hl_top['PDF_Actual(EA)'] = count_list
-    data_storage.df.loc[(data_storage.df['Op_Seq'] > 160) & (data_storage.df['Op_Seq'] <= 600), 
+    data_storage.df.loc[(data_storage.df['Op_Seq'] > 190) & (data_storage.df['Op_Seq'] <= 600), 
     ['Actual_fond(EA)', 'PDF_Actual(EA)']] = data_storage.data_hl_top[['Actual_fond(EA)', 'PDF_Actual(EA)']].values
     diff_list = []
     for index, row in data_storage.data_hl_top.iterrows():
@@ -338,7 +357,7 @@ def run_bot_hl(text_info, Textboxfind):
     doc.save(output_path_hl_bot)
     data_storage.data_hl_bot['Actual_fond(EA)'] = collected_values_list
     data_storage.data_hl_bot['PDF_Actual(EA)'] = count_list
-    data_storage.df.loc[(data_storage.df['Op_Seq'] > 160) & (data_storage.df['Op_Seq'] <= 600), 
+    data_storage.df.loc[(data_storage.df['Op_Seq'] > 190) & (data_storage.df['Op_Seq'] <= 600), 
     ['Actual_fond(EA)', 'PDF_Actual(EA)']] = data_storage.data_hl_bot[['Actual_fond(EA)', 'PDF_Actual(EA)']].values
     diff_list = []
     for index, row in data_storage.data_hl_bot.iterrows():

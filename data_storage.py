@@ -78,13 +78,14 @@ time_no_bot = 0
 date_time = 0
 
 option = 0
-
+pdf_path_top = ""
+pdf_path_bot = ""
 pdf_path = ""
 pdf_top_filename = ""
 pdf_bot_filename = ""
 cadfile = ""
 cadfilename = ""
-
+filepathcsv = ""
 noload_cad_len = 0
 noloadtime = 0
 

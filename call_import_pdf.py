@@ -101,6 +101,7 @@ def showfile_pdf(root, text_info,red_frame_run,red_frame_importpdf):
         clear_import_twopage()
         global pdf_path_top
         pdf_path_top = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
+        data_storage.pdf_path_top = pdf_path_top
         pdf_top_filename = os.path.basename(pdf_path_top)
         data_storage.pdf_top_filename = pdf_top_filename
 
@@ -119,6 +120,7 @@ def showfile_pdf(root, text_info,red_frame_run,red_frame_importpdf):
         clear_import_twopage()
         global pdf_path_bot
         pdf_path_bot = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
+        data_storage.pdf_path_bot = pdf_path_bot
         pdf_bot_filename = os.path.basename(pdf_path_bot)
         data_storage.pdf_bot_filename = pdf_bot_filename
 

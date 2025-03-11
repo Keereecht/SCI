@@ -128,16 +128,17 @@ def createcustomerwindows():
     createcustomer(display, update_combobox_values)  # ส่งฟังก์ชัน update_combobox_values ไปให้ createcustomer
 
 def update_combobox_values(values):
-    # sorted_values = sorted(values)  # เรียงค่าจาก A-Z
-    # combobox_customer['values'] = sorted_values  # อัปเดตค่าของ Combobox
+    # """ เรียงค่าตาม A-Z และให้ TEST_PRODUCT อยู่ท้ายสุด """
+    
+    values = list(values)  # แปลงเป็น list เผื่อ input เป็น set หรือ tuple
     if "TEST_PRODUCT" in values:
         values.remove("TEST_PRODUCT")
-        sorted_values = sorted(values)  # เรียงค่าตาม A-Z
-        sorted_values.append("TEST_PRODUCT")  # ใส่ TEST_PRODUCT ที่ท้ายสุด
-    else:
-        sorted_values = sorted(values)
     
+    sorted_values = sorted(values, key=str.casefold)  # เรียงค่าตาม A-Z (ไม่สนตัวพิมพ์ใหญ่-เล็ก)
+    sorted_values.append("TEST_PRODUCT")  # เพิ่ม TEST_PRODUCT ไว้ท้ายสุด
+
     combobox_customer['values'] = sorted_values  # อัปเดต Combobox
+
 def on_select(event):
     selection = combobox_customer.get()
     data_storage.selected_customer = selection
@@ -333,9 +334,7 @@ def Run_highlight():
             resetfile.reset_files()
 # รวมรูป
 def on_files_selected(selected_files, folder_path):
-    """
-    Callback function สำหรับรับค่าที่เลือกจาก GUI และดำเนินการ
-    """
+
     print("Selected Files:", selected_files)
     print("Folder Path:", folder_path)
 
@@ -374,9 +373,7 @@ def on_files_selected(selected_files, folder_path):
         print(f"Error: {e}")
 
 def run_merge_gui():
-    """
-    เรียกใช้งาน GUI จาก call_Merge_images
-    """
+
     call_Merge_images.create_gui(on_files_selected)
 
 left_frame = tk.Frame(display, bg="#D9D9D9", padx=5, pady=5, highlightbackground="black", highlightcolor="black", highlightthickness=1)
