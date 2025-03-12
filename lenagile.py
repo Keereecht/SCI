@@ -39,6 +39,7 @@ def check_ref_des(df, df_name, mismatch_entries, text_info):
     for x in range(df.shape[0]):
         ref_des = df.iat[x, 3]  # ดึงค่าจากคอลัมน์ที่ 3
         qty = df.iat[x, 1]  # ดึงค่าจากคอลัมน์ที่ 1
+        Item_Des = df.iat[x, 2]
 
         if pd.isna(ref_des):
             continue  # ข้ามถ้าข้อมูลเป็น NaN
@@ -46,7 +47,8 @@ def check_ref_des(df, df_name, mismatch_entries, text_info):
         ref_des_list = str(ref_des).split(",")
 
         if len(ref_des_list) != qty:
-            error_message = f"❌ ในไฟล์ CSV ค่าของ {ref_des_list} = {len(ref_des_list)} ไม่ตรงกับ QTY = {qty} กรุณาตรวจสอบ\n"
+            # error_message = f"❌ ในไฟล์ CSV ค่าของ {ref_des_list} = {len(ref_des_list)} ไม่ตรงกับ QTY = {qty} กรุณาตรวจสอบ\n"
+            error_message = f"❌ ในไฟล์ CSV ค่าของ {  Item_Des } {ref_des_list} = {len(ref_des_list)} ไม่ตรงกับ QTY = {qty} กรุณาตรวจสอบ\n"
             mismatch_entries.append(error_message)
 
             # แสดงข้อความผิดพลาดเป็น **สีแดง และตัวหนา**
