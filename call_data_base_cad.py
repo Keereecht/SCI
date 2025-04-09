@@ -69,19 +69,54 @@ def data_base_sheet():
     # กำหนดค่าเริ่มต้นสำหรับค่าที่อาจเป็น None
     cadname = data_storage.cadfilename if data_storage.cadfilename else ""
     outpathdata = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname)
-
     # เพิ่ม project_id และ customer ในแถวถัดไป
+    # customer_values = [
+    #         [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_TOP_SMT", int(data_storage.sum_qty_top), int(data_storage.sum_find_top), data_storage.Not_found_top, int(data_storage.percent_top_smt), data_storage.time_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
+    #         [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_BOT_SMT",int(data_storage.sum_qty_bot), int(data_storage.sum_find_bot), data_storage.Not_found_bot, int(data_storage.percent_bot_smt), data_storage.time_bot, data_storage.logged_in_user,data_storage.date_time,outpathdata],
+
+    #         [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_Handload",int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot), int(data_storage.sum_qty_hltop) - int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot), int((int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot)/int(data_storage.sum_qty_hltop))*100), data_storage.time_hl_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
+
+    #         [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "***TOP_Handload",int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop), data_storage.Not_found_hltop, int(data_storage.percent_top_hltop), data_storage.time_hl_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
+    #         [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "***BOT_Handload",int(data_storage.sum_qty_hlbot), int(data_storage.sum_find_hlbot), data_storage.Not_found_hlbot, int(data_storage.percent_bot_hlbot), data_storage.time_hl_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],
+    #         [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_TOP_Noload",int(data_storage.noload_cad_len),int(data_storage.noload_cad_len), 0, 100, data_storage.noloadtime, data_storage.logged_in_user, data_storage.date_time,outpathdata],
+    #         [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_BOT_Noload",int(data_storage.noload_cad_len),int(data_storage.noload_cad_len), 0, 100, data_storage.noloadtime, data_storage.logged_in_user,data_storage.date_time,outpathdata]
+    #     ]
     customer_values = [
-            [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_TOP_SMT", int(data_storage.sum_qty_top), int(data_storage.sum_find_top), data_storage.Not_found_top, int(data_storage.percent_top_smt), data_storage.time_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-            [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_BOT_SMT",int(data_storage.sum_qty_bot), int(data_storage.sum_find_bot), data_storage.Not_found_bot, int(data_storage.percent_bot_smt), data_storage.time_bot, data_storage.logged_in_user,data_storage.date_time,outpathdata],
+        [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname, 'None', data_storage.projectname + "_TOP_SMT",
+        int(data_storage.sum_qty_top), int(data_storage.sum_find_top), int(data_storage.Not_found_top) if data_storage.Not_found_top is not None else 0,
+        int(data_storage.percent_top_smt) if data_storage.percent_top_smt is not None else 0, data_storage.time_top, data_storage.logged_in_user, data_storage.date_time, outpathdata],
 
-            [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_Handload",int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot), int(data_storage.sum_qty_hltop) - int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot), int((int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot)/int(data_storage.sum_qty_hltop))*100), data_storage.time_hl_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
+        [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname, 'None', data_storage.projectname + "_BOT_SMT",
+        int(data_storage.sum_qty_bot), int(data_storage.sum_find_bot), int(data_storage.Not_found_bot) if data_storage.Not_found_bot is not None else 0,
+        int(data_storage.percent_bot_smt) if data_storage.percent_bot_smt is not None else 0, data_storage.time_bot, data_storage.logged_in_user, data_storage.date_time, outpathdata],
 
-            [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "***TOP_Handload",int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop), data_storage.Not_found_hltop, int(data_storage.percent_top_hltop), data_storage.time_hl_top, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-            [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "***BOT_Handload",int(data_storage.sum_qty_hlbot), int(data_storage.sum_find_hlbot), data_storage.Not_found_hlbot, int(data_storage.percent_bot_hlbot), data_storage.time_hl_bot, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-            [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_TOP_Noload",int(data_storage.noload_cad_len),int(data_storage.noload_cad_len), 0, 100, data_storage.noloadtime, data_storage.logged_in_user, data_storage.date_time,outpathdata],
-            [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname ,'None',data_storage.projectname + "_BOT_Noload",int(data_storage.noload_cad_len),int(data_storage.noload_cad_len), 0, 100, data_storage.noloadtime, data_storage.logged_in_user,data_storage.date_time,outpathdata]
-        ]
+        [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname, 'None', data_storage.projectname + "_Handload",
+        int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot),
+        int(data_storage.sum_qty_hltop) - int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot),
+        int((int(data_storage.sum_find_hltop + data_storage.sum_find_hlbot)/int(data_storage.sum_qty_hltop)*100) if data_storage.sum_qty_hltop > 0 else 0),
+        data_storage.time_hl_top, data_storage.logged_in_user, data_storage.date_time, outpathdata],
+
+        [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname, 'None', data_storage.projectname + "***TOP_Handload",
+        int(data_storage.sum_qty_hltop), int(data_storage.sum_find_hltop),
+        int(data_storage.Not_found_hltop) if data_storage.Not_found_hltop is not None else 0,
+        int(data_storage.percent_top_hltop) if data_storage.percent_top_hltop is not None else 0,
+        data_storage.time_hl_top, data_storage.logged_in_user, data_storage.date_time, outpathdata],
+
+        [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname, 'None', data_storage.projectname + "***BOT_Handload",
+        int(data_storage.sum_qty_hlbot), int(data_storage.sum_find_hlbot),
+        int(data_storage.Not_found_hlbot) if data_storage.Not_found_hlbot is not None else 0,
+        int(data_storage.percent_bot_hlbot) if data_storage.percent_bot_hlbot is not None else 0,
+        data_storage.time_hl_bot, data_storage.logged_in_user, data_storage.date_time, outpathdata],
+
+        [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname, 'None', data_storage.projectname + "_TOP_Noload",
+        int(data_storage.noload_cad_len), int(data_storage.noload_cad_len), 0, 100,
+        data_storage.noloadtime, data_storage.logged_in_user, data_storage.date_time, outpathdata],
+
+        [next_project_id, data_storage.selected_customer, data_storage.projectname + "_CAD", data_storage.filenamecsv, cadname, 'None', data_storage.projectname + "_BOT_Noload",
+        int(data_storage.noload_cad_len), int(data_storage.noload_cad_len), 0, 100,
+        data_storage.noloadtime, data_storage.logged_in_user, data_storage.date_time, outpathdata]
+    ]
+
     last_row = len(col_values) + 1
     # ปรับช่วงการอัปเดตให้สอดคล้องกับจำนวนแถวของข้อมูล
     sheet.update(f'A{last_row}:O{last_row + len(customer_values) - 1}', customer_values)

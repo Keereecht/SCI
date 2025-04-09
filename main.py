@@ -418,7 +418,7 @@ for i in range(3):
 redio_frame.grid_rowconfigure(0, weight=0)
 R1 = Radiobutton(redio_frame, text="Top", bg="#EBEBEB",variable=option,value=1,command=filters)
 R1.grid(row=0, column=0, padx=(0, 20), pady=5)
-R2 = Radiobutton(redio_frame, text="Button", bg="#EBEBEB",variable=option,value=2,command=filters)
+R2 = Radiobutton(redio_frame, text="Bottom", bg="#EBEBEB",variable=option,value=2,command=filters)
 R2.grid(row=0, column=1, padx=(20, 20), pady=5)
 R3 = Radiobutton(redio_frame, text="Handload_TOP", bg="#EBEBEB",variable=option,value=3,command=filters)
 R3.grid(row=0, column=2, padx=(20, 20), pady=5)

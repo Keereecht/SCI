@@ -19,6 +19,7 @@ def load_csv_data():
     try:
         if 'customer_data' not in data_storage.__dict__:
             data_storage.customer_data = pd.read_csv(csv_file_path)
+            print( data_storage.customer_data)
     except pd.errors.EmptyDataError:
         messagebox.showerror("Error", "CSV file is empty!")
     except pd.errors.ParserError:
@@ -78,35 +79,6 @@ def createcustomer(display, update_combobox_callback):
         tree.insert('', 'end', values=[row['Customer_name']])
     tree.pack(pady=20, padx=20, fill='both', expand=True)
 
-    # def add_customer_name():
-    #     global df
-    #     new_customer_name = simpledialog.askstring("Input", "Enter new Customer name:", parent=mywindow)
-        
-    #     # Validation: check if input is provided, starts with uppercase, and is not a duplicate
-    #     if not new_customer_name or not new_customer_name[0].isupper() or not new_customer_name.isalpha() or new_customer_name in df['Customer_name'].values:
-    #         messagebox.showwarning("Invalid Input", "Invalid or duplicate Customer name! Make sure it starts with an uppercase letter and contains only letters.")
-    #         return
-        
-    #     new_data = pd.DataFrame([[new_customer_name]], columns=['Customer_name'])
-    #     df = pd.concat([df, new_data], ignore_index=True)
-    #     df.to_csv(csv_file_path, index=False)
-    #     data_storage.customer_data = df
-    #     tree.insert('', 'end', values=[new_customer_name])
-        
-    #     # สร้างโฟลเดอร์ใหม่ตาม Customer_name
-    #     folder_path = os.path.join(data_storage.Main_folder, new_customer_name)
-    #     try:
-    #         if not os.path.exists(folder_path):
-    #             os.makedirs(folder_path)
-    #             messagebox.showinfo("Success", f"The customer folder was created successfully.")
-    #         else:
-    #             messagebox.showwarning("Warning", f"โฟลเดอร์ '{folder_path}' มีอยู่แล้ว!")
-    #     except Exception as e:
-    #         messagebox.showerror("Error", f"เกิดข้อผิดพลาดในการสร้างโฟลเดอร์: {str(e)}")
-    #         return
-
-    #     # อัปเดตค่าใน Combobox
-    #     update_combobox_callback(df['Customer_name'].tolist())
     def add_customer_name():
         global df
         new_customer_name = simpledialog.askstring("เพิ่มลูกค้า", "กรุณากรอกชื่อลูกค้า:", parent=mywindow)

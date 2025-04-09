@@ -101,7 +101,7 @@ def run_top(text_info): # ใช้ text_widget จาก global
             # text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
             formatted_text = (
                 f"{str(loop_counter).ljust(count_width)}"
-                f"{"TOP".ljust(count_layer)}"
+                f"{'TOP'.ljust(count_layer)}"
                 f"{word[4].ljust(value_width)}"
                 f"{'Found'.ljust(result_width)}\n"
                 )
@@ -241,7 +241,7 @@ def run_bot(text_info):
             # text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
             formatted_text = (
                 f"{str(loop_counter).ljust(count_width)}"
-                f"{"BOTTOM".ljust(count_layer)}"
+                f"{'BOTTOM'.ljust(count_layer)}"
                 f"{word[4].ljust(value_width)}"
                 f"{'Found'.ljust(result_width)}\n"
                 )
@@ -342,7 +342,7 @@ def run_top_hl(text_info):
             # text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
             formatted_text = (
                 f"{str(loop_counter).ljust(count_width)}"
-                f"{"TOP".ljust(count_layer)}"
+                f"{'TOP'.ljust(count_layer)}"
                 f"{word[4].ljust(value_width)}"
                 f"{'Found'.ljust(result_width)}\n"
                 )
@@ -407,7 +407,7 @@ def run_bot_hl(text_info, Textboxfind):
             # text_info.insert(tk.END, f"{word[4]} Actual_fond {loop_counter} (EA)\n")
             formatted_text = (
                 f"{str(loop_counter).ljust(count_width)}"
-                f"{"BOTTOM".ljust(count_layer)}"
+                f"{'BOTTOM'.ljust(count_layer)}"
                 f"{word[4].ljust(value_width)}"
                 f"{'Found'.ljust(result_width)}\n"
                 )
@@ -461,7 +461,8 @@ def noload_top():
     csv_output_path = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname, data_storage.projectname+'_TOP_NOLOAD.csv')
     collected_values_list = []
     count_list = []
-    pattern = re.compile(r'^[A-Z]\d+$')
+    # pattern = re.compile(r'^[A-Z]\d+$')
+    pattern = re.compile(r'^([A-Z])(?:(?!\1)[A-Z])?\d+$')
     total_count_top = 0
     with open(csv_output_path, mode='w', newline='') as file:
         writer = csv.writer(file)
@@ -531,7 +532,8 @@ def noload_bot():
     csv_output_path = os.path.join(data_storage.Main_folder, data_storage.selected_customer, data_storage.projectname, data_storage.projectname+'_BOT_NOLOAD.csv')
     collected_values_list = []
     count_list = []
-    pattern = re.compile(r'^[A-Z]\d+$')
+    # pattern = re.compile(r'^[A-Z]\d+$')
+    pattern = re.compile(r'^([A-Z])(?:(?!\1)[A-Z])?\d+$')
     total_count_bot = 0
     with open(csv_output_path, mode='w', newline='') as file:
         writer = csv.writer(file)

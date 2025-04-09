@@ -109,7 +109,6 @@ def sync_customer_with_listemail():
 
     # รายชื่ออีเมลที่ต้องใส่ในคอลัมน์ B
     email_list = "Anusit.B@sanmina.com, putamongkol@gmail.com, keereechlit@gmail.com, netsara.w@sanmina.com, nichaya.th@sanmina.com, sawanee.s@sanmina.com, tassanee.j@sanmina.com, wijit.s@sanmina.com"
-    email_list2 = "keereechlit@gmail.com"
     if missing_customers:
         print("🔄 กำลังเพิ่มรายชื่อลูกค้าที่ขาดหายลงใน listemail...")
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -118,7 +117,7 @@ def sync_customer_with_listemail():
 
         sheet = client.open(filesheet).worksheet("listemail")
         for name in missing_customers:
-            sheet.append_row([name, email_list2])  # เพิ่มชื่อในคอลัมน์ A และอีเมลในคอลัมน์ B
+            sheet.append_row([name, email_list])  # เพิ่มชื่อในคอลัมน์ A และอีเมลในคอลัมน์ B
             print(f"✅ เพิ่ม '{name}' และอีเมลลงใน listemail")
 
 # 🔹 เรียกใช้ฟังก์ชันหลัก
